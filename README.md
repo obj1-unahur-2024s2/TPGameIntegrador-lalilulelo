@@ -1,10 +1,10 @@
 # Nombre del juego (<- borrar y completar)
 
-## Equipo de desarrollo
+## Equipo de desarrollo 💻
 
-- Alguien
-- Persona
-- etc.
+- Esteban Christian Durante
+- Lautaro Jeremias Paz
+- 
 
 ## Capturas
 
