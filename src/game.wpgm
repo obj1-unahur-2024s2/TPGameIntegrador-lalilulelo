@@ -1,3 +1,4 @@
+import enemigos.*
 import wollok.game.*
 
 program TowerDefense {
