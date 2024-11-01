@@ -1,10 +1,11 @@
-# Nombre del juego (<- borrar y completar)
+# Tower Defense
 
 ## Equipo de desarrollo 💻
 
 - Esteban Christian Durante
 - Lautaro Jeremias Paz
-- 
+- Matias Dominguez
+- Luciano Ardana
 
 ## Capturas
 
@@ -12,7 +13,7 @@
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
+- Hay 2 niveles, cada nivel tiene una fortaleza y una serie de enemigos, tu objetivo es colocar torretas para evitar que la fortaleza sea destruida
 
 
 ## Otros
