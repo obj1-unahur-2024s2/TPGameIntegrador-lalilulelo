@@ -1,6 +1,11 @@
 import enemigos.*
 import wollok.game.*
+import niveles.*
 
 program TowerDefense {
+  game.title("Tower Defense")
+  game.height(50)
+  game.width(50)
+  game.boardGround("")
   game.start()
 }

@@ -1,25 +1,26 @@
 import elementos.*
+import wollok.game.*
 
-class Enemigo inherits ElementoConSalud {
-  override method recibirDanio(cantidadDanio) {
+class Enemigo inherits ElementoAnimado {
+  const img = "soldier_step"
+  const property velocidadDeMovimiento
+  var salud
+  
+  method recibirDanio(cantidadDanio) {
     salud = 0.max(salud - cantidadDanio)
   }
   
   method estaMuerto() = salud == 0
   
-  method moverDerecha() {
-    posicion += 1
+  method move(position) {
+    posicion = position
   }
   
-  method moverIzquierda() {
-    posicion -= 1
-  }
+  method image() = (img + frame.toString()) + ".png"
   
-  method moverArriba() {
-    posicion -= 0.1
-  }
-  
-  method moverAbajo() {
-    posicion += 0.1
+  method seguirCamino(nivel) {
+    nivel.camino().forEach(
+      { c => game.onTick(500, "avanzar", { self.move(c) }) }
+    )
   }
 }
