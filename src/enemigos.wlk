@@ -4,6 +4,7 @@ import wollok.game.*
 class Enemigo inherits ElementoAnimado {
   const img = "soldier_step"
   const property velocidadDeMovimiento
+  const property caminoASeguir = []
   var salud
   
   method recibirDanio(cantidadDanio) {

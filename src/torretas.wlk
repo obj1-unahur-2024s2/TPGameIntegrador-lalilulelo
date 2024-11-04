@@ -1,12 +1,6 @@
-// src/torretas.wlk
-// src/torretas.wlk
-// src/torretas.wlk
-// src/torretas.wlk
-// src/torretas.wlk
-// src/torretas.wlk
-// src/torretas.wlk
 import wollok.game.*
 import elementos.*
+import enemigos.*
 
 class Torret1 inherits ElementoAnimado{
     const property nroTorreta = 1
@@ -16,13 +10,20 @@ class Torret1 inherits ElementoAnimado{
     const property direccionDeMira = null
     var img = "torret" + nroTorreta + "_stance_" + direccionDeMira + ".png"
 
-    /*
-    if(enemigoDetectado()) {
-        atacar()
-    } else {
-        reposo()
+    method rangoUp() = game.origin().y() + rangoAtaque
+
+    method rangoRight() = game.origin().x() + rangoAtaque
+
+    method rangoDown() = game.origin().y() - rangoAtaque
+
+    method rangoLeft() = game.origin().x() - rangoAtaque
+
+    method detectarEnemigo(cordenada) {
+        if(game.origin()..cordenada.esEnemigo()) {
+            self.atacar()
+        }
     }
-    */
+
     method atacar() {
         game.onTick(velocidadAtaque, "atacar", { self.disparar(direccionDeMira) })
     }
@@ -36,4 +37,15 @@ class Torret1 inherits ElementoAnimado{
     method reposo() {
         img = "torret" + nroTorreta + "_stance_" + direccionDeMira + ".png"
     }
+}
+
+object direcciones {
+    const property rangoAtaque = 6
+    const property direccionDeMira = null
+
+    method hayEnemigo(direccion, rango) {
+        
+    }
+
+    
 }

@@ -26,3 +26,9 @@ class ElementoAnimado inherits Elemento {
     )
   }
 }
+
+class Camino inherits Elemento {
+  const property esEnemigo = false
+  
+  method image() = "camino.png"
+}
