@@ -18,4 +18,11 @@ class Nivel {
       listaEnemigos.remove(listaEnemigos.first())
     }
   }
+
+  method fondo() {
+    game.width(20)
+    game.height(20)
+    game.cellSize(234)
+    return "stage1.png"
+  }
 }
