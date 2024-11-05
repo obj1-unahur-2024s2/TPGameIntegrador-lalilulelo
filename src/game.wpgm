@@ -6,6 +6,15 @@ program TowerDefense {
   game.title("Tower Defense")
   game.height(50)
   game.width(50)
-  game.boardGround("")
+  const enemigo = new Enemigo(
+    velocidadDeMovimiento = 100,
+    salud = 100,
+    posicion = game.center()
+  )
+  const nivel = new Nivel(
+    camino = [game.at(10, 5), game.at(10, 1), game.at(10, 2), game.at(10, 3)],
+    listaEnemigos = [enemigo]
+  )
+  nivel.iniciar()
   game.start()
 }

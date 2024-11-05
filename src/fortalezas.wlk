@@ -1,7 +1,9 @@
 import elementos.*
 
-class Fortalezas inherits ElementoConSalud {
-  override method recibirDanio(cantidadDeDanio) {
+class Fortaleza inherits Elemento {
+  var salud
+  
+  method recibirDanio(cantidadDeDanio) {
     salud = 0.max(salud - cantidadDeDanio)
   }
   

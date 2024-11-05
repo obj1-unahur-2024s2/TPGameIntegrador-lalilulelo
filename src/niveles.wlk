@@ -7,18 +7,15 @@ class Nivel {
   const listaEnemigos = []
   
   method iniciar() {
-    game.onTick(1000, "spawnear-enemigos", { self.spawnearEnemigos() })
+    game.addVisual(listaEnemigos.first())
+    listaEnemigos.first().animar()
+    listaEnemigos.first().seguirCamino(self)
   }
   
   method spawnearEnemigos() {
-    if (not listaEnemigos.isEmpty()) {
-      game.addVisual(listaEnemigos.first())
-      listaEnemigos.first().animar()
-      listaEnemigos.first().seguirCamino(camino)
-      listaEnemigos.remove(listaEnemigos.first())
-    }
+    listaEnemigos.remove(listaEnemigos.first())
   }
-
+  
   method fondo() {
     game.width(20)
     game.height(20)

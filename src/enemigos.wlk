@@ -21,7 +21,9 @@ class Enemigo inherits ElementoAnimado {
   
   method seguirCamino(nivel) {
     nivel.camino().forEach(
-      { c => game.onTick(500, "avanzar", { self.move(c) }) }
+      { c => game.onTick(1000, "avanzar", { self.move(c) }) }
     )
   }
+  
+  method esEnemigo() = true
 }
