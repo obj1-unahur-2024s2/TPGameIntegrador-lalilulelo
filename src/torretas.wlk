@@ -1,3 +1,6 @@
+// src/torretas.wlk
+// src/torretas.wlk
+// src/torretas.wlk
 import wollok.game.*
 import elementos.*
 import enemigos.*
@@ -18,10 +21,12 @@ class Torret1 inherits ElementoAnimado{
 
     method rangoLeft() = game.origin().x() - rangoAtaque
 
+    method detectarEnemigoContinuamente(cordenada) {
+        game.onTick(100, "deteccion", { self.detectarEnemigo(cordenada) })
+    }
+
     method detectarEnemigo(cordenada) {
-        if(game.origin()..cordenada.esEnemigo()) {
-            self.atacar()
-        }
+        if(game.origin()..game.at(cordenada.x(), cordenada.y()).esEnemigo()) self.atacar() else self.reposo()
     }
 
     method atacar() {
