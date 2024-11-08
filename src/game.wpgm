@@ -12,7 +12,7 @@ program TowerDefense {
     posicion = game.center()
   )
   const nivel = new Nivel(
-    camino = [game.at(10, 5), game.at(10, 1), game.at(10, 2), game.at(10, 3)],
+    camino = [game.at(10, 5), game.at(20, 1), game.at(30, 2), game.at(40, 7)],
     listaEnemigos = [enemigo]
   )
   nivel.iniciar()

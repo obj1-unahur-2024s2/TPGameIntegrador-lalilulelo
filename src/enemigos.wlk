@@ -20,10 +20,46 @@ class Enemigo inherits ElementoAnimado {
   method image() = (img + frame.toString()) + ".png"
   
   method seguirCamino(nivel) {
-    nivel.camino().forEach(
-      { c => game.onTick(1000, "avanzar", { self.move(c) }) }
-    )
+    const camino = nivel.camino()
+    game.onTick(2000, "avanzar", {
+      if(!camino.isEmpty()) {
+        self.move(camino.first())
+        camino.remove(camino.first())
+      }
+    })
+  }
+
+  /*
+    method move(positionX, positionY) {
+    posicion = game.at(positionX, positionY)
   }
   
+  method image() = (img + frame.toString()) + ".png"
+  
+  method seguirCamino(nivel) {
+    game.onTick(1000, "avanzar", { self.avanzar(nivel) })
+  }
+
+  method avanzar(nivel) {
+    const camino = nivel.camino()
+    
+  }
+
+  method U() {
+    self.move(posicion.x(), posicion.y()+1)
+  }
+
+  method R() {
+    self.move(posicion.x()+1, posicion.y())
+  }
+
+  method D() {
+    self.move(posicion.x(), posicion.y()-1)
+  }
+
+  method L() {
+    self.move(posicion.x()-1, posicion.y())
+  }
+  */
   method esEnemigo() = true
 }

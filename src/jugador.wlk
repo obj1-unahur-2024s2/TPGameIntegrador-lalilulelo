@@ -9,5 +9,8 @@ object jugador {
         keyboard.num2().onPressDo{game.addVisual(Torret2)}
         keyboard.num3().onPressDo{game.addVisual(Torret3)}
     }
+
+    method direccion() {}
+      
 }
 
