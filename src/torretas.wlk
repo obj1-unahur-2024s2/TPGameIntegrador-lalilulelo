@@ -23,8 +23,9 @@ class Torret1 inherits ElementoAnimado {
   }
   
   method detectarEnemigo(cordenada) {
-    if (game.getObjectsIn(posicion..game.at(cordenada.x(), cordenada.y())).esEnemigo())
-      self.atacar()
+    if (game.getObjectsIn(
+        posicion .. game.at(cordenada.x(), cordenada.y())
+      ).esEnemigo()) self.atacar()
     else self.reposo()
   }
   

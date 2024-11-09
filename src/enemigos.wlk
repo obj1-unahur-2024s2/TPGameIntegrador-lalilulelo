@@ -2,9 +2,8 @@ import elementos.*
 import wollok.game.*
 
 class Enemigo inherits ElementoAnimado {
-  const img = "soldier_step"
+  const imagen = "soldier_step"
   const property velocidadDeMovimiento
-  const property caminoASeguir = []
   var salud
   
   method recibirDanio(cantidadDanio) {
@@ -17,19 +16,47 @@ class Enemigo inherits ElementoAnimado {
     posicion = position
   }
   
-  method image() = (img + frame.toString()) + ".png"
+  method image() = (imagen + frame.toString()) + ".png"
   
   method seguirCamino(nivel) {
     const camino = nivel.camino()
     game.onTick(
       velocidadDeMovimiento,
       "avanzar",
-      { if (!camino.isEmpty()) {
+      { 
+        if (!camino.isEmpty()) {
           self.move(camino.first())
           camino.remove(camino.first())
-        } }
+        } else {
+          game.removeTickEvent("avanzar")
+          game.removeTickEvent("animacion")
+          self.atacarFortalezaDeNivel(nivel)
+        }
+        if (self.estaMuerto()) {
+          game.removeTickEvent("avanzar")
+          game.removeTickEvent("animacion")
+          game.removeVisual(self)
+        }
+      }
     )
-    if (camino.isEmpty()) game.removeTickEvent("avanzar")
+  }
+  
+  method atacarFortalezaDeNivel(nivel) {
+    game.onTick(
+      1000,
+      "atacar",
+      { 
+        nivel.fortaleza().recibirDanio(10)
+        if (self.estaMuerto()) {
+          game.removeTickEvent("atacar")
+          game.removeVisual(self)
+        }
+        if (nivel.fortaleza().estaDestruida()) {
+          game.removeTickEvent("atacar")
+          nivel.fortaleza().destruirse()
+        }
+      }
+    )
   }
   
   method esEnemigo() = true

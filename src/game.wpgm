@@ -1,6 +1,7 @@
 import enemigos.*
 import wollok.game.*
 import niveles.*
+import fortalezas.*
 
 program TowerDefense {
   game.title("Tower Defense")
@@ -11,9 +12,15 @@ program TowerDefense {
     salud = 100,
     posicion = game.center()
   )
+  const fortaleza1 = new Fortaleza(
+    salud = 10,
+    posicion = game.center(),
+    imagen = "fortaleza.png"
+  )
   const nivel = new Nivel(
     camino = [game.at(10, 5), game.at(20, 1), game.at(30, 2), game.at(40, 7)],
-    listaEnemigos = [enemigo]
+    listaEnemigos = [enemigo],
+    fortaleza = fortaleza1
   )
   nivel.iniciar()
   game.start()
