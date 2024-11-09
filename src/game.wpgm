@@ -7,7 +7,7 @@ program TowerDefense {
   game.height(50)
   game.width(50)
   const enemigo = new Enemigo(
-    velocidadDeMovimiento = 100,
+    velocidadDeMovimiento = 1000,
     salud = 100,
     posicion = game.center()
   )
