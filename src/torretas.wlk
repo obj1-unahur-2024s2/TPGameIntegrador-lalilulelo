@@ -2,31 +2,28 @@ import wollok.game.*
 import elementos.*
 import enemigos.*
 
-class Torret1 inherits ElementoAnimado {
-  const property nroTorreta = 1
-  const property velocidadAtaque = 2000
-  const property rangoAtaque = 6
-  const property danio = 15
-  const property direccionDeMira = null
-  var img = ((("torret" + nroTorreta) + "_stance_") + direccionDeMira) + ".png"
+class Torret inherits ElementoAnimado {
+  const property nroTorreta
+  const property velocidadAtaque
+  const property rangoAtaque
+  const property danio
+  var img = "torret1_stance_down.png"
+
+  method image() = img
   
-  method rangoUp() = posicion.y() + rangoAtaque
-  
-  method rangoRight() = posicion.x() + rangoAtaque
-  
-  method rangoDown() = posicion.y() - rangoAtaque
-  
-  method rangoLeft() = posicion.x() - rangoAtaque
-  
-  method detectarEnemigoContinuamente(cordenada) {
-    game.onTick(100, "deteccion", { self.detectarEnemigo(cordenada) })
+  method detectarEnemigoContinuamente() {
+    game.onTick(100, "deteccion", { self.detectarEnemigo() })
   }
   
-  method detectarEnemigo(cordenada) {
+  method detectarEnemigo() {
     if (game.getObjectsIn(
-        posicion .. game.at(cordenada.x(), cordenada.y())
+        posicion .. game.at(Trinchera.direccion.rangoX(), Trinchera.direccion.rangoY())
       ).esEnemigo()) self.atacar()
     else self.reposo()
+  }
+
+  method direccionADisparar() {
+
   }
   
   method atacar() {
@@ -36,29 +33,47 @@ class Torret1 inherits ElementoAnimado {
       { frame = if (frame < cantidadDeFotogramas) frame + 1 else 1 }
     )
     img =
-      ((((("torret" + nroTorreta) + "_frame") + frame.toString()) + "_") + direccionDeMira) + ".png"
+      ((((("torret" + nroTorreta.toString()) + "_frame") + frame.toString()) + "_") + Trinchera.direccion.toString()) + ".png"
     return danio
   }
   
   method reposo() {
     game.removeTickEvent("animacion")
-    img = ((("torret" + nroTorreta) + "_stance_") + direccionDeMira) + ".png"
+    img = ((("torret" + nroTorreta.toString()) + "_stance_") + Trinchera.direccion.toString()) + ".png"
   }
 }
 
-class Torret2 inherits Torret1 {
+class Trinchera {
+  var estaVacia = true
+  const property direccion
+  var property posicion
   
-}
+  method position() = posicion
 
-class Torret3 inherits Torret1 {
-  
-}
-
-object direcciones {
-  const property rangoAtaque = 6
-  const property direccionDeMira = null
-  
-  method hayEnemigo(direccion, rango) {
-    
+  method ponerTorreta(torreta) {
+      keyboard.num1().onPressDo{game.addVisual(Torret)}
+      keyboard.num2().onPressDo{game.addVisual(Torret)}
+      keyboard.num3().onPressDo{game.addVisual(Torret)}
+      estaVacia = true
   }
+}
+
+object up {
+  method rangoY() = Torret.posicion().y() + Torret.rangoAtaque
+  method rangoX() = Torret.posicion().x()
+}
+
+object right {
+  method rangoX() = Torret.posicion().x() + Torret.rangoAtaque
+  method rangoY() = Torret.posicion().y()
+}
+
+object down {
+  method rangoY() = Torret.posicion().y() - Torret.rangoAtaque
+  method rangoX() = Torret.posicion().x()
+}
+
+object left {
+  method rangoX() = Torret.posicion().x() - Torret.rangoAtaque
+  method rangoY() = Torret.posicion().y()
 }

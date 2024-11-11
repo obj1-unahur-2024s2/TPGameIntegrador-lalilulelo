@@ -1,3 +1,4 @@
+import torretas.*
 import enemigos.*
 import wollok.game.*
 import niveles.*
@@ -10,7 +11,14 @@ program TowerDefense {
   const enemigo = new Enemigo(
     velocidadDeMovimiento = 1000,
     salud = 100,
-    posicion = game.center()
+    posicion = game.center().down(1)
+  )
+  const torreta1 = new Torret(
+    nroTorreta = 1,
+    velocidadAtaque = 2000,
+    rangoAtaque = 5,
+    danio = 20,
+    posicion = game.center().up(1)
   )
   const fortaleza1 = new Fortaleza(
     salud = 10,
@@ -18,8 +26,9 @@ program TowerDefense {
     imagen = "fortaleza.png"
   )
   const nivel = new Nivel(
-    camino = [game.at(10, 5), game.at(20, 1), game.at(30, 2), game.at(40, 7)],
+    camino = [game.center().down(1).left(2), game.center().down(1).left(1), game.center().down(1), game.center().down(1).right(1)],
     listaEnemigos = [enemigo],
+    listaTorretas = [torreta1],
     fortaleza = fortaleza1
   )
   nivel.iniciar()

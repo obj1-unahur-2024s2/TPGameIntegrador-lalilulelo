@@ -5,10 +5,12 @@ import wollok.game.*
 class Nivel {
   const property camino = []
   const listaEnemigos = []
+  const listaTorretas = []
   const property fortaleza
   
   method iniciar() {
     game.addVisual(listaEnemigos.first())
+    game.addVisual(listaTorretas.first())
     game.addVisual(fortaleza)
     listaEnemigos.first().animar()
     listaEnemigos.first().seguirCamino(self)
