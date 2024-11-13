@@ -8,18 +8,8 @@ program TowerDefense {
   game.title("Tower Defense")
   game.height(50)
   game.width(50)
-  const enemigo = new Enemigo(
-    velocidadDeMovimiento = 1000,
-    salud = 100,
-    posicion = game.center().down(1)
-  )
-  const torreta1 = new Torret(
-    nroTorreta = 1,
-    velocidadAtaque = 2000,
-    rangoAtaque = 5,
-    danio = 20,
-    posicion = game.center().up(1)
-  )
+  const enemigo = new Enemigo(velocidadDeMovimiento = 1000,salud = 100,posicion = game.center().down(1))
+  const torreta1 = new Torret(nroTorreta = 1,velocidadAtaque = 2000,rangoAtaque = 5,danio = 20,direccion = 3,posicion = game.center().up(1))
   const fortaleza1 = new Fortaleza(
     salud = 10,
     posicion = game.center(),

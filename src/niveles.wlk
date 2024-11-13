@@ -1,3 +1,4 @@
+import torretas.*
 import enemigos.*
 import fortalezas.*
 import wollok.game.*
