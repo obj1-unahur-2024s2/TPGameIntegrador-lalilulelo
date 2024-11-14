@@ -11,6 +11,10 @@ class Torret inherits ElementoAnimado {
   const property areaDeAtaque = [posicion]
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
 
+  var ataco = false
+
+  method ataco() = ataco
+
   method image() = img
 
   method crearAreaDeDisparo() {
@@ -45,26 +49,22 @@ class Torret inherits ElementoAnimado {
   method detectarEnemigo() {
     const copiaDeAreaDeAtaque = areaDeAtaque
     const enemigosEnArea = []
-/*
-    game.onTick(1, "ordenDeAtaque", {
-      if(!copiaDeAreaDeAtaque.isEmpty() && game.getObjectsIn(copiaDeAreaDeAtaque.fisrt()).esEnemigo()) {
-      enemigosEnArea.add(copiaDeAreaDeAtaque.first())
-      copiaDeAreaDeAtaque.first().remove()
-    } else if(copiaDeAreaDeAtaque.isEmpty()){
-      game.removeTickEvent("ordenDeAtaque")
-    } else {
-      copiaDeAreaDeAtaque.first().remove()
-    }
-    })*/
-    if(game.getObjectsIn(copiaDeAreaDeAtaque.fisrt()).esEnemigo()) {
-      enemigosEnArea.add(copiaDeAreaDeAtaque.first())
-      copiaDeAreaDeAtaque.first().remove()
-    } else {
-      copiaDeAreaDeAtaque.first().remove()
-    }
 
-    if (!enemigosEnArea.isEmpty()) self.atacar()
+    /*game.onTick(1, "ordenDeAtaque", {*/
+      if(!game.getObjectsIn(copiaDeAreaDeAtaque.first()).isEmpty() && game.getObjectsIn(copiaDeAreaDeAtaque.first()).first().esEnemigo()) {
+      enemigosEnArea.add(copiaDeAreaDeAtaque.first())
+      copiaDeAreaDeAtaque.remove(copiaDeAreaDeAtaque.first())
+    } else {
+      copiaDeAreaDeAtaque.remove(copiaDeAreaDeAtaque.first())
+    }
+    /*})*/
+
+    if (!enemigosEnArea.isEmpty()) self.ataco1()
     else self.reposo()
+  }
+
+  method ataco1() {
+    ataco = true
   }
   
   method atacar() {
@@ -82,6 +82,8 @@ class Torret inherits ElementoAnimado {
     game.removeTickEvent("animacion")
     img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
   }
+
+  method esEnemigo() = false
 }
 
 class Trinchera {

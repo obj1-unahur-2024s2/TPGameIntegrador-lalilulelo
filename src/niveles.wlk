@@ -14,6 +14,8 @@ class Nivel {
     game.addVisual(listaTorretas.first())
     game.addVisual(fortaleza)
     listaEnemigos.first().animar()
+    listaTorretas.first().crearAreaDeDisparo()
+    listaTorretas.first().detectarEnemigoContinuamente()
     listaEnemigos.first().seguirCamino(self)
   }
   
