@@ -10,10 +10,8 @@ class Torret inherits ElementoAnimado {
   const property direccion
   const property areaDeAtaque = [posicion]
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
-
-  var ataco = false
-
-  method ataco() = ataco
+  const property copiaDeAreaDeAtaque = areaDeAtaque
+  const property enemigosEnArea = []
 
   method image() = img
 
@@ -33,10 +31,10 @@ class Torret inherits ElementoAnimado {
     }
     else if (rangoAtaque != 0 && direccion == 3) {
       rangoAtaque -= 1
-      areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
+      areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1))
     } else if (rangoAtaque != 0 && direccion == 4){
       rangoAtaque -= 1
-      areaDeAtaque.add(game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y()))
+      areaDeAtaque.add(game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y()))
     } else {
       game.removeTickEvent("repetir")
     }
@@ -47,24 +45,19 @@ class Torret inherits ElementoAnimado {
   }
   
   method detectarEnemigo() {
-    const copiaDeAreaDeAtaque = areaDeAtaque
-    const enemigosEnArea = []
+    
 
-    /*game.onTick(1, "ordenDeAtaque", {*/
-      if(!game.getObjectsIn(copiaDeAreaDeAtaque.first()).isEmpty() && game.getObjectsIn(copiaDeAreaDeAtaque.first()).first().esEnemigo()) {
-      enemigosEnArea.add(copiaDeAreaDeAtaque.first())
-      copiaDeAreaDeAtaque.remove(copiaDeAreaDeAtaque.first())
-    } else {
-      copiaDeAreaDeAtaque.remove(copiaDeAreaDeAtaque.first())
-    }
-    /*})*/
+    game.onTick(1, "ordenDeAtaque", {
+      if(!game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).isEmpty() && game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).first().esEnemigo()) {
+      self.enemigosEnArea().add(self.copiaDeAreaDeAtaque().first())
+      self.copiaDeAreaDeAtaque().remove(self.copiaDeAreaDeAtaque().first())
+    } else if(!self.copiaDeAreaDeAtaque().isEmpty()){
+      self.copiaDeAreaDeAtaque().remove(self.copiaDeAreaDeAtaque().first())
+    } else game.removeTickEvent("ordenDeAtaque")
+    })
 
-    if (!enemigosEnArea.isEmpty()) self.ataco1()
+    if (!enemigosEnArea.isEmpty()) self.atacar()
     else self.reposo()
-  }
-
-  method ataco1() {
-    ataco = true
   }
   
   method atacar() {
