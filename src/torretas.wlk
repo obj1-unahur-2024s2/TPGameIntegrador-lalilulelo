@@ -9,7 +9,8 @@ class Torret inherits ElementoAnimado {
   const property danio
   const property direccion
   const property areaDeAtaque = [posicion]
-  var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
+  var img =
+    ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
   const property copiaDeAreaDeAtaque = areaDeAtaque
   const property enemigosEnArea = []
   var siFunciono = false
@@ -21,29 +22,42 @@ class Torret inherits ElementoAnimado {
   }
 
   method image() = img
-
+  
   method crearAreaDeDisparo() {
     const copiaDeSeguridad = rangoAtaque
     game.onTick(100, "repetir", {self.areaDeDisparo()})
     rangoAtaque = copiaDeSeguridad
   }
-
+  
   method areaDeDisparo() {
-    if (rangoAtaque != 0 && direccion == 1) {
+    if ((rangoAtaque != 0) && (direccion == 1)) {
       rangoAtaque -= 1
-      areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
-    } else if (rangoAtaque != 0 && direccion == 2) {
-      rangoAtaque -= 1
-      areaDeAtaque.add(game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y()))
-    }
-    else if (rangoAtaque != 0 && direccion == 3) {
-      rangoAtaque -= 1
-      areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1))
-    } else if (rangoAtaque != 0 && direccion == 4){
-      rangoAtaque -= 1
-      areaDeAtaque.add(game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y()))
+      areaDeAtaque.add(
+        game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1)
+      )
     } else {
-      game.removeTickEvent("repetir")
+      if ((rangoAtaque != 0) && (direccion == 2)) {
+        rangoAtaque -= 1
+        areaDeAtaque.add(
+          game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y())
+        )
+      } else {
+        if ((rangoAtaque != 0) && (direccion == 3)) {
+          rangoAtaque -= 1
+          areaDeAtaque.add(
+            game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1)
+          )
+        } else {
+          if ((rangoAtaque != 0) && (direccion == 4)) {
+            rangoAtaque -= 1
+            areaDeAtaque.add(
+              game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y())
+            )
+          } else {
+            game.removeTickEvent("repetir")
+          }
+        }
+      }
     }
   }
   
@@ -52,6 +66,24 @@ class Torret inherits ElementoAnimado {
   }
   
   method detectarEnemigo() {
+    game.onTick(
+      1,
+      "ordenDeAtaque",
+      { if ((!game.getObjectsIn(
+          self.copiaDeAreaDeAtaque().first()
+        ).isEmpty()) && game.getObjectsIn(
+          self.copiaDeAreaDeAtaque().first()
+        ).first().esEnemigo()) {
+          self.enemigosEnArea().add(self.copiaDeAreaDeAtaque().first())
+          self.copiaDeAreaDeAtaque().remove(self.copiaDeAreaDeAtaque().first())
+        } else {
+          if (!self.copiaDeAreaDeAtaque().isEmpty())
+            self.copiaDeAreaDeAtaque().remove(
+              self.copiaDeAreaDeAtaque().first()
+            )
+          else game.removeTickEvent("ordenDeAtaque")
+        } }
+    )
     
     /*game.onTick(1, "ordenDeAtaque", {*/
       if(!self.copiaDeAreaDeAtaque().isEmpty() && !game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).isEmpty() && game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).first().esEnemigo()) {
@@ -78,9 +110,10 @@ class Torret inherits ElementoAnimado {
   
   method reposo() {
     game.removeTickEvent("animacion")
-    img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
+    img =
+      ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
   }
-
+  
   method esEnemigo() = false
 }
 
@@ -93,13 +126,12 @@ class Trinchera {
   method image() = img
   
   method position() = posicion
-
+  
   method ponerTorreta(torreta) {
-    if(estaVacia)
-      keyboard.num1().onPressDo{game.addVisual(Torret)}
-      keyboard.num2().onPressDo{game.addVisual(Torret)}
-      keyboard.num3().onPressDo{game.addVisual(Torret)}
-      estaVacia = true
+    if (estaVacia) keyboard.num1().onPressDo({ game.addVisual(Torret) })
+    keyboard.num2().onPressDo({ game.addVisual(Torret) })
+    keyboard.num3().onPressDo({ game.addVisual(Torret) })
+    estaVacia = true
   }
 
   method esEnemigo() = false
