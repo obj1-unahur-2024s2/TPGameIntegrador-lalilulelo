@@ -28,11 +28,11 @@ class Torret inherits ElementoAnimado {
    method crearAreaDeDisparo() {
     if (copiaRangoAtaque != 0 && direccion == 1) {
       self.crearAreaDeDisparoUp()
-    } else if (copiaRangoAtaque != 0 && direccion == 2) {
+    } if (copiaRangoAtaque != 0 && direccion == 2) {
       self.crearAreaDeDisparoRight()
-    } else if (copiaRangoAtaque != 0 && direccion == 3) {
+    } if (copiaRangoAtaque != 0 && direccion == 3) {
       self.crearAreaDeDisparoDown()
-    } else if (copiaRangoAtaque != 0 && direccion == 4){
+    }  if (copiaRangoAtaque != 0 && direccion == 4){
       self.crearAreaDeDisparoLeft()
     }
   }
@@ -40,7 +40,7 @@ class Torret inherits ElementoAnimado {
   method crearAreaDeDisparoUp() {
     copiaRangoAtaque -= 1
     areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
-    self.crearAreaDeDisparoUp()
+    self.crearAreaDeDisparo()
   }
 
   method crearAreaDeDisparoRight() {
@@ -64,7 +64,7 @@ class Torret inherits ElementoAnimado {
   method detectarEnemigoContinuamente() {
     game.onTick(velocidadAtaque, "atacar", {self.detectarEnemigo()})
   }
-  
+
 method detectarEnemigo() {
   if(copiaDeAreaDeAtaque.isEmpty() && !game.getObjectsIn(copiaDeAreaDeAtaque.first()).isEmpty() && game.getObjectsIn(copiaDeAreaDeAtaque.first()).first().esEnemigo()) {
         self.atacar()
@@ -82,7 +82,6 @@ method detectarEnemigo() {
     )
     img =
       ((((("torret" + nroTorreta.toString()) + "_frame") + frame.toString()) + "_") + direccion.toString()) + ".png"
-    return danio
   }
   
   method reposo() {
