@@ -5,14 +5,14 @@ import enemigos.*
 class Torret inherits ElementoAnimado {
   const property nroTorreta
   const property velocidadAtaque
-  var property rangoAtaque
+  const property rangoAtaque
+  var copiaRangoAtaque = rangoAtaque
   const property danio
   const property direccion
   const property areaDeAtaque = [posicion]
-  var img =
-    ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
-  const property copiaDeAreaDeAtaque = areaDeAtaque
+  var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
   const property enemigosEnArea = []
+  var copiaDeAreaDeAtaque = areaDeAtaque
   var siFunciono = false
 
   method siFunciono() = siFunciono
@@ -22,81 +22,58 @@ class Torret inherits ElementoAnimado {
   }
 
   method image() = img
+
+
   
-  method crearAreaDeDisparo() {
-    const copiaDeSeguridad = rangoAtaque
-    game.onTick(100, "repetir", {self.areaDeDisparo()})
-    rangoAtaque = copiaDeSeguridad
-  }
-  
-  method areaDeDisparo() {
-    if ((rangoAtaque != 0) && (direccion == 1)) {
-      rangoAtaque -= 1
-      areaDeAtaque.add(
-        game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1)
-      )
-    } else {
-      if ((rangoAtaque != 0) && (direccion == 2)) {
-        rangoAtaque -= 1
-        areaDeAtaque.add(
-          game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y())
-        )
-      } else {
-        if ((rangoAtaque != 0) && (direccion == 3)) {
-          rangoAtaque -= 1
-          areaDeAtaque.add(
-            game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1)
-          )
-        } else {
-          if ((rangoAtaque != 0) && (direccion == 4)) {
-            rangoAtaque -= 1
-            areaDeAtaque.add(
-              game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y())
-            )
-          } else {
-            game.removeTickEvent("repetir")
-          }
-        }
-      }
+   method crearAreaDeDisparo() {
+    if (copiaRangoAtaque != 0 && direccion == 1) {
+      self.crearAreaDeDisparoUp()
+    } else if (copiaRangoAtaque != 0 && direccion == 2) {
+      self.crearAreaDeDisparoRight()
+    } else if (copiaRangoAtaque != 0 && direccion == 3) {
+      self.crearAreaDeDisparoDown()
+    } else if (copiaRangoAtaque != 0 && direccion == 4){
+      self.crearAreaDeDisparoLeft()
     }
+  }
+
+  method crearAreaDeDisparoUp() {
+    copiaRangoAtaque -= 1
+    areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
+    self.crearAreaDeDisparoUp()
+  }
+
+  method crearAreaDeDisparoRight() {
+    copiaRangoAtaque -= 1
+    areaDeAtaque.add(game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y()))
+    self.crearAreaDeDisparo()
+  }
+
+  method crearAreaDeDisparoDown() {
+    copiaRangoAtaque -= 1
+    areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1))
+    self.crearAreaDeDisparo()
+  }
+
+  method crearAreaDeDisparoLeft() {
+    copiaRangoAtaque -= 1
+    areaDeAtaque.add(game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y()))
+    self.crearAreaDeDisparo()
   }
   
   method detectarEnemigoContinuamente() {
-    game.onTick(100, "deteccion", { self.detectarEnemigo() })
+    game.onTick(velocidadAtaque, "atacar", {self.detectarEnemigo()})
   }
   
-  method detectarEnemigo() {
-    game.onTick(
-      1,
-      "ordenDeAtaque",
-      { if ((!game.getObjectsIn(
-          self.copiaDeAreaDeAtaque().first()
-        ).isEmpty()) && game.getObjectsIn(
-          self.copiaDeAreaDeAtaque().first()
-        ).first().esEnemigo()) {
-          self.enemigosEnArea().add(self.copiaDeAreaDeAtaque().first())
-          self.copiaDeAreaDeAtaque().remove(self.copiaDeAreaDeAtaque().first())
-        } else {
-          if (!self.copiaDeAreaDeAtaque().isEmpty())
-            self.copiaDeAreaDeAtaque().remove(
-              self.copiaDeAreaDeAtaque().first()
-            )
-          else game.removeTickEvent("ordenDeAtaque")
-        } }
-    )
-    
-    /*game.onTick(1, "ordenDeAtaque", {*/
-      if(!self.copiaDeAreaDeAtaque().isEmpty() && !game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).isEmpty() && game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).first().esEnemigo()) {
+method detectarEnemigo() {
+  if(copiaDeAreaDeAtaque.isEmpty() && !game.getObjectsIn(copiaDeAreaDeAtaque.first()).isEmpty() && game.getObjectsIn(copiaDeAreaDeAtaque.first()).first().esEnemigo()) {
         self.atacar()
-    } else if(!self.copiaDeAreaDeAtaque().isEmpty()){
-        self.copiaDeAreaDeAtaque().remove(self.copiaDeAreaDeAtaque().first())
-    } else self.funciono()
-    /*})*/
+    } else if(copiaDeAreaDeAtaque.isEmpty()){
+        copiaDeAreaDeAtaque.remove(copiaDeAreaDeAtaque.first())
+        self.reposo()
+    } else copiaDeAreaDeAtaque = areaDeAtaque
+}
 
-    if (!enemigosEnArea.isEmpty()) self.atacar()
-    else self.reposo()
-  }
-  
   method atacar() {
     game.onTick(
       velocidadAtaque / 2,
