@@ -18,12 +18,8 @@ class ElementoAnimado inherits Elemento {
   var frame = 1
   const cantidadDeFotogramas = 2
   
-  method animar() {
-    game.onTick(
-      500,
-      "animacion",
-      { frame = if (frame < cantidadDeFotogramas) frame + 1 else 1 }
-    )
+  method animar() { 
+    game.onTick(500, "animacion", { frame = if (frame < cantidadDeFotogramas) frame + 1 else 1 })
   }
 }
 

@@ -1,4 +1,3 @@
-// src/niveles.wlk
 import torretas.*
 import enemigos.*
 import fortalezas.*
@@ -8,10 +7,12 @@ class Nivel {
   const property camino = []
   const listaEnemigos = []
   const listaTorretas = []
+  const listaTrincheras = []
   const property fortaleza
   
   method iniciar() {
     game.addVisual(listaEnemigos.first())
+    game.addVisual(listaTrincheras.first())
     game.addVisual(listaTorretas.first())
     game.addVisual(fortaleza)
     listaEnemigos.first().animar()
@@ -25,9 +26,6 @@ class Nivel {
   }
   
   method fondo() {
-    game.width(20)
-    game.height(20)
-    game.cellSize(234)
-    return "stage1.png"
+    return "Stage1.png"
   }
 }

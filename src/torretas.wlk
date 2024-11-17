@@ -2,29 +2,26 @@ import wollok.game.*
 import elementos.*
 import enemigos.*
 
-class Torret inherits ElementoAnimado {
+class Torret inherits Elemento {
   const property nroTorreta
   const property velocidadAtaque
   const property rangoAtaque
   var copiaRangoAtaque = rangoAtaque
   const property danio
-  const property direccion
+  var direccion
   const property areaDeAtaque = [posicion]
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
   const property enemigosEnArea = []
-  var copiaDeAreaDeAtaque = areaDeAtaque
-  var siFunciono = false
-
-  method siFunciono() = siFunciono
-
-  method funciono() {
-    siFunciono = true
-  }
+  const property copiaDeAreaDeAtaque = [posicion]
 
   method image() = img
 
+  method definirDireccion() {
+    direccion = game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).direccion()
+  }
 
-  
+  method copiaDeAreaDeAtaque() = copiaDeAreaDeAtaque
+
    method crearAreaDeDisparo() {
     if (copiaRangoAtaque != 0 && direccion == 1) {
       self.crearAreaDeDisparoUp()
@@ -40,24 +37,28 @@ class Torret inherits ElementoAnimado {
   method crearAreaDeDisparoUp() {
     copiaRangoAtaque -= 1
     areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
+    copiaDeAreaDeAtaque.add(areaDeAtaque.last())
     self.crearAreaDeDisparo()
   }
 
   method crearAreaDeDisparoRight() {
     copiaRangoAtaque -= 1
     areaDeAtaque.add(game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y()))
+    copiaDeAreaDeAtaque.add(areaDeAtaque.last())
     self.crearAreaDeDisparo()
   }
 
   method crearAreaDeDisparoDown() {
     copiaRangoAtaque -= 1
     areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1))
+    copiaDeAreaDeAtaque.add(areaDeAtaque.last())
     self.crearAreaDeDisparo()
   }
 
   method crearAreaDeDisparoLeft() {
     copiaRangoAtaque -= 1
     areaDeAtaque.add(game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y()))
+    copiaDeAreaDeAtaque.add(areaDeAtaque.last())
     self.crearAreaDeDisparo()
   }
   
@@ -66,31 +67,33 @@ class Torret inherits ElementoAnimado {
   }
 
 method detectarEnemigo() {
-  if(copiaDeAreaDeAtaque.isEmpty() && !game.getObjectsIn(copiaDeAreaDeAtaque.first()).isEmpty() && game.getObjectsIn(copiaDeAreaDeAtaque.first()).first().esEnemigo()) {
+  if(!self.copiaDeAreaDeAtaque().isEmpty() && !game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).isEmpty() && game.getObjectsIn(self.copiaDeAreaDeAtaque().first()).first().esEnemigo()) {
         self.atacar()
-    } else if(copiaDeAreaDeAtaque.isEmpty()){
-        copiaDeAreaDeAtaque.remove(copiaDeAreaDeAtaque.first())
+    } else if(!self.copiaDeAreaDeAtaque().isEmpty()){
+        self.copiaDeAreaDeAtaque().remove(self.copiaDeAreaDeAtaque().first())
         self.reposo()
-    } else copiaDeAreaDeAtaque = areaDeAtaque
+        self.detectarEnemigo()
+    } else self.copiaDeAreaDeAtaque().addAll(areaDeAtaque)
 }
 
   method atacar() {
-    game.onTick(
-      velocidadAtaque / 2,
-      "animacion",
-      { frame = if (frame < cantidadDeFotogramas) frame + 1 else 1 }
-    )
-    img =
-      ((((("torret" + nroTorreta.toString()) + "_frame") + frame.toString()) + "_") + direccion.toString()) + ".png"
+    img = "torret" + nroTorreta.toString() + "_frame2_" + direccion.toString() + ".png"
+    game.onTick(500, "animacionTorreta", {self.animacionAtaque()})
+  }
+
+  method animacionAtaque() {
+    img = "torret" + nroTorreta.toString() + "_frame1_" + direccion.toString() + ".png"
+    game.removeTickEvent("animacionTorreta")
   }
   
   method reposo() {
     game.removeTickEvent("animacion")
-    img =
-      ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
+    img = "torret" + nroTorreta.toString() + "_stance_" + direccion.toString() + ".png"
   }
   
   method esEnemigo() = false
+
+  method esTrinchera() = false
 }
 
 class Trinchera {
@@ -107,8 +110,10 @@ class Trinchera {
     if (estaVacia) keyboard.num1().onPressDo({ game.addVisual(Torret) })
     keyboard.num2().onPressDo({ game.addVisual(Torret) })
     keyboard.num3().onPressDo({ game.addVisual(Torret) })
-    estaVacia = true
+    estaVacia = false
   }
 
   method esEnemigo() = false
+
+  method esTrinchera() = true
 }
