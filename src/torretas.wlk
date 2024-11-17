@@ -68,10 +68,12 @@ class Torret inherits Elemento {
 
   method atacar() {
     img = "torret" + nroTorreta.toString() + "_frame2_" + direccion.toString() + ".png"
+    game.onTick(500, "animacionTorreta" + idTorreta, {self.animacionAtaque()})
   }
 
   method animacionAtaque() {
     img = "torret" + nroTorreta.toString() + "_frame1_" + direccion.toString() + ".png"
+    game.removeTickEvent("animacionTorreta" + idTorreta)
   }
   
   method esEnemigo() = false
@@ -90,6 +92,10 @@ class Trinchera {
   method image() = img
   
   method position() = posicion
+
+  method llenarTrinchera() {
+    estaVacia = false
+  }
 
   method esEnemigo() = false
 
