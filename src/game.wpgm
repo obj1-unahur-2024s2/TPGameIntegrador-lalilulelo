@@ -9,19 +9,20 @@ program TowerDefense {
   game.width(10)
   game.height(10)
   game.cellSize(234)
-  const enemigo = new Enemigo(velocidadDeMovimiento = 2000,salud = 100,posicion = game.center().down(1).left(2))
+  const enemigo = new Enemigo(idEnemigo = 1, velocidadDeMovimiento = 1000, salud = 100, posicion = game.center())
+  const enemigo2 = new Enemigo(idEnemigo = 2, velocidadDeMovimiento = 1000, salud = 100, posicion = game.center())
   const trinchera = new Trinchera(direccion = 3, posicion = game.center().up(1))
   const fortaleza1 = new Fortaleza(
-    salud = 10,
     posicion = game.center(),
-    imagen = "fortaleza.png"
+    cantidadEnemigosASoportar = 2
   )
   const nivel = new Nivel(
     camino = [game.center().down(1).left(1), game.center().down(1), game.center().down(1).right(1), game.center().down(1).right(2)],
-    listaEnemigos = [enemigo],
+    listaEnemigos = [enemigo, enemigo2],
     listaTrincheras = [trinchera],
-    fortaleza = fortaleza1
+    fortalezas = [fortaleza1]
   )
-  nivel.iniciar()
   game.start()
+  nivel.iniciar()
+  
 }

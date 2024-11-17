@@ -1,0 +1,35 @@
+import src.enemigos.*
+import wollok.game.*
+
+describe "test de enemigos" {
+    test "si el enemigo se mueve a la derecha, su posicion deberia ser la siguiente" {
+        const enemigo = new Enemigo(
+            idEnemigo = 1,
+            velocidadDeMovimiento = 1000,
+            salud = 100,
+            posicion = game.center()
+        )
+        enemigo.move(game.at(enemigo.posicion().x() + 1, enemigo.posicion().y()))
+        assert.that(enemigo.posicion().x() == game.center().x() + 1)
+    }
+    test "si el enemigo tiene la salud en 0 muere" {
+        const enemigo = new Enemigo(
+            idEnemigo = 1,
+            velocidadDeMovimiento = 1000,
+            salud = 0,
+            posicion = game.center()
+        )
+        assert.that(enemigo.estaMuerto())
+    }
+
+    test "si el enemigo recibe danio, su salud deberia ser menor" {
+        const enemigo = new Enemigo(
+            idEnemigo = 1,
+            velocidadDeMovimiento = 1000,
+            salud = 100,
+            posicion = game.center()
+        )
+        enemigo.recibirDanio(50)
+        assert.equals(50, enemigo.salud())
+    }
+}

@@ -2,12 +2,11 @@ import elementos.*
 import wollok.game.*
 
 class Fortaleza inherits Elemento {
-  var salud
-  var imagen
+  var imagen = "fortaleza.png"
+  var cantidadEnemigos = 0
+  const cantidadEnemigosASoportar
   
-  method recibirDanio(cantidadDeDanio) {
-    salud = 0.max(salud - cantidadDeDanio)
-  }
+
   
   method image() = imagen
   
@@ -19,7 +18,13 @@ class Fortaleza inherits Elemento {
     game.removeVisual(self)
   }
   
-  method estaDestruida() = salud == 0
+  method sumarEnemigo() {
+    cantidadEnemigos += 1
+  }
+
+  method estaDestruida() {
+  return cantidadEnemigos == cantidadEnemigosASoportar
+  } 
   
   method esEnemigo() = false
 

@@ -1,0 +1,22 @@
+import src.fortalezas.*
+import wollok.game.*
+describe "test de fortalezas" {
+    test "si la fortaleza tiene 2 enemigos la fortaleza esta destruida" {
+        const fortaleza = new Fortaleza(
+            posicion = game.center(),
+            cantidadEnemigosASoportar = 2
+        )
+        fortaleza.sumarEnemigo()
+        fortaleza.sumarEnemigo()
+        assert.that(fortaleza.estaDestruida())
+    }
+
+    test "si la fortaleza tiene 1 enemigo la fortaleza no esta destruida" {
+        const fortaleza = new Fortaleza(
+            posicion = game.center(),
+            cantidadEnemigosASoportar = 2
+        )
+        fortaleza.sumarEnemigo()
+        assert.notThat(fortaleza.estaDestruida())
+    }
+}
