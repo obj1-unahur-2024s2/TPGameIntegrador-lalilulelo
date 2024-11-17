@@ -14,6 +14,7 @@ class Nivel {
     game.addVisual(listaEnemigos.first())
     game.addVisual(listaTrincheras.first())
     game.addVisual(fortalezas.first())
+    game.addVisualCharacter(jugador)
     listaEnemigos.first().seguirCamino(self)
   }
   

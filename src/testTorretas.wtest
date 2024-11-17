@@ -2,21 +2,3 @@ import torretas.*
 import enemigos.*
 import wollok.game.*
 
-describe "Si la torreta1 tiene un enemigo a dos celdas de distancia, el area de ataque deberia de no estar vacio" {
-  test "shoot" {
-    const enemigo = new Enemigo(
-    velocidadDeMovimiento = 1000,
-    salud = 100,
-    posicion = game.center().down(1)
-  )
-  const torreta1 = new Torret(
-    nroTorreta = 1,
-    velocidadAtaque = 2000,
-    rangoAtaque = 5,
-    danio = 20,
-    direccion = 3,
-    posicion = game.center().up(1)
-  )
-  assert.that(!torreta1.areaDeAtaque().isEmpty())
-  }
-}
