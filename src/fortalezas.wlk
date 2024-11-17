@@ -22,4 +22,8 @@ class Fortaleza inherits Elemento {
   method estaDestruida() = salud == 0
   
   method esEnemigo() = false
+
+  method esTrinchera() = false
+
+  method esTorreta() = false
 }

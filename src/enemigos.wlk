@@ -60,4 +60,8 @@ class Enemigo inherits ElementoAnimado {
   }
   
   method esEnemigo() = true
+
+  method esTrinchera() = false
+
+  method esTorreta() = false
 }

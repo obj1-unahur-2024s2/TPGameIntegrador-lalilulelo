@@ -11,7 +11,7 @@ program TowerDefense {
   game.cellSize(234)
   const enemigo = new Enemigo(velocidadDeMovimiento = 2000,salud = 100,posicion = game.center().down(1).left(2))
   const trinchera = new Trinchera(direccion = 3, posicion = game.center().up(1))
-  const torreta1 = new Torret(nroTorreta = 1,velocidadAtaque = 2000,rangoAtaque = 5,danio = 20,direccion = 3,posicion = game.center().up(1))
+  const torreta1 = new Torret(nroTorreta = 1, rangoAtaque = 5,danio = 20,direccion = 3,posicion = game.center().up(1))
   const fortaleza1 = new Fortaleza(
     salud = 10,
     posicion = game.center(),
