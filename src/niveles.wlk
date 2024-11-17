@@ -8,14 +8,13 @@ class Nivel {
   const listaEnemigos = []
   const listaTorretas = []
   const listaTrincheras = []
-  const property fortaleza
+  const property fortalezas
   
   method iniciar() {
     game.addVisual(listaEnemigos.first())
     game.addVisual(listaTrincheras.first())
     game.addVisual(listaTorretas.first())
-    game.addVisual(fortaleza)
-    listaEnemigos.first().animar()
+    game.addVisual(fortalezas.first())
     listaTorretas.first().crearAreaDeDisparo()
     listaEnemigos.first().seguirCamino(self)
   }
@@ -27,4 +26,5 @@ class Nivel {
   method fondo() {
     return "Stage1.png"
   }
+
 }
