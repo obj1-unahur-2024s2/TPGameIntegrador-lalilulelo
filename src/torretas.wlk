@@ -93,6 +93,8 @@ class Trinchera {
   
   method position() = posicion
 
+  method estaVacia() = estaVacia
+
   method llenarTrinchera() {
     estaVacia = false
   }

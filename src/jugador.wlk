@@ -9,19 +9,27 @@ object jugador {
 
     method position() = posicion
 
-    method crearTorreta() {
-      keyboard.z().onPressDo({
-        if(game.getObjectsIn(posicion).filter({e => e.esTorreta()}).first().estaVacia()){
-            const torreta new Torret(idTorreta = torretasPuestas, nroTorreta = 1, rangoAtaque = 5,danio = 20,direccion = 3,posicion = posicion)
-            game.addVisual(Torret)
-            self.ponerTorreta()
-        } else game.say(self, "Ya hay una torreta o no es una trinchera")
-      })
+    method position(newPosition) {
+        posicion = newPosition
+    }
+
+    method controlesJugador() {
+      keyboard.z().onPressDo{self.ponerTorreta()}
     }
 
     method ponerTorreta() {
-        game.getObjectsIn(posicion).filter({e => e.esTorreta()}).first().llenarTrinchera()
-        torretasPuestas += 1
+        if(game.getObjectsIn(posicion).any({e => e.esTrinchera()}) && game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).first().estaVacia()){
+            const torreta new Torret(idTorreta = torretasPuestas, nroTorreta = 1, rangoAtaque = 5,danio = 20,direccion = 3,posicion = posicion)
+            game.addVisual(torreta)
+            game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).first().llenarTrinchera()
+            torretasPuestas += 1
+        } else game.say(self, "Ya hay una torreta o no es una trinchera")
     }
+
+    method esEnemigo() = false
+
+    method esTrinchera() = false
+
+    method esTorreta() = false
 }
 
