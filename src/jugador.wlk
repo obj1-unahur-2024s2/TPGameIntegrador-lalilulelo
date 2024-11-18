@@ -1,35 +1,60 @@
 import wollok.game.*
-import torretas.*
 
 object jugador {
     var property posicion = game.origin()
-    var torretasPuestas = 0
+    var frame = 1
+    const fotogramas = 2
 
-    method image() = "jugador.png"
 
-    method position() = posicion
+    var imagen = "soldier_step"
+
+    method image() = imagen + frame + ".png"
 
     method position(newPosition) {
         posicion = newPosition
     }
 
+    method cambiarImagen(nuevaimagen) {
+        imagen = nuevaimagen
+    }
+
     method controlesJugador() {
-      keyboard.z().onPressDo{self.ponerTorreta()}
+    keyboard.up().onPressDo({self.moverArriba()})
+    keyboard.down().onPressDo({self.moverAbajo()})
+    keyboard.left().onPressDo({self.moverIzquierda()})
+    keyboard.right().onPressDo({self.moverDerecha()})
+    keyboard.space().onPressDo({self.interactuar()})
     }
 
-    method ponerTorreta() {
-        if(game.getObjectsIn(posicion).any({e => e.esTrinchera()}) && game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).first().estaVacia()){
-            const torreta new Torret(idTorreta = torretasPuestas, nroTorreta = 1, rangoAtaque = 5,danio = 20,direccion = 3,posicion = posicion)
-            game.addVisual(torreta)
-            game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).first().llenarTrinchera()
-            torretasPuestas += 1
-        } else game.say(self, "Ya hay una torreta o no es una trinchera")
+    method esJugador() = true
+
+    method moverArriba() {
+        self.position(posicion.up())
+        self.moverse()
     }
 
-    method esEnemigo() = false
+    method moverAbajo() {
+        self.position(posicion.down())
+        self.moverse()
+    }
 
-    method esTrinchera() = false
+    method moverIzquierda() {
+        self.position(posicion.left())
+        self.moverse()
+    }
 
-    method esTorreta() = false
+    method moverDerecha() {
+        self.position(posicion.right())
+        self.moverse()
+    }
+
+    method moverse() {
+        if(frame == fotogramas) frame = 1 else frame = frame + 1
+        self.cambiarImagen("soldier_step" + frame + ".png")
+    }
+
+    method interactuar() {
+        game.onCollideDo(self, {elemento => elemento.interactuarConJugador(self)})
+    }
 }
 

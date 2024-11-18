@@ -1,8 +1,6 @@
-import torretas.*
 import enemigos.*
 import wollok.game.*
 import niveles.*
-import fortalezas.*
 
 program TowerDefense {
   game.title("Tower Defense")
@@ -11,16 +9,9 @@ program TowerDefense {
   game.cellSize(234)
   const enemigo = new Enemigo(idEnemigo = 1, velocidadDeMovimiento = 1000, salud = 100, posicion = game.center())
   const enemigo2 = new Enemigo(idEnemigo = 2, velocidadDeMovimiento = 1000, salud = 100, posicion = game.center())
-  const trinchera = new Trinchera(direccion = 3, posicion = game.center().up(1))
-  const fortaleza1 = new Fortaleza(
-    posicion = game.center(),
-    cantidadEnemigosASoportar = 2
-  )
+ 
   const nivel = new Nivel(
-    camino = [game.center().down(1).left(1), game.center().down(1), game.center().down(1).right(1), game.center().down(1).right(2)],
-    listaEnemigos = [enemigo, enemigo2],
-    listaTrincheras = [trinchera],
-    fortalezas = [fortaleza1]
+    listaEnemigos = [enemigo, enemigo2]
   )
   game.start()
   nivel.iniciar()

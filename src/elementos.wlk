@@ -1,10 +1,16 @@
 import wollok.game.*
 
+
 class Elemento {
-  var property posicion
+    var property posicion
   
   method position() = posicion
+
+  method interactuarConJugador(jugador) {
+    
+  }
 }
+
 
 class Background {
   const imagen
@@ -12,17 +18,4 @@ class Background {
   method position() = game.origin()
   
   method image() = imagen
-}
-
-
-class Camino inherits Elemento {
-  const property esEnemigo = false
-  
-  method image() = "camino.png"
-
-  method esEnemigo() = false
-
-  method esTrinchera() = false
-
-  method esTorreta() = false
 }
