@@ -31,6 +31,8 @@ object jugador {
 
     method esJugador() = true
 
+    method esColisionable() = false
+
     method moverArriba() {
         self.position(posicion.up())
         self.moverse()

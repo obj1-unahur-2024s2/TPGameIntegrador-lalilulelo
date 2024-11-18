@@ -1,3 +1,5 @@
+// src/cyclops.wlk
+// src/cyclops.wlk
 import niveles.*
 import elementos.*
 import jugador.*
@@ -12,6 +14,8 @@ class Enemigo inherits Elemento {
   method imagen() = imagen + frame + ".png"
 
   method seguirJugadorConstantemente(posicionJugador) {
+    var movimientoVariable = velocidadMovimiento
+    if(!game.getObjectsIn(posicion).any({e => e.esColisionable()})) movimientoVariable /= 2
     game.onTick(velocidadMovimiento, "persecucion", {self.seguirJugador(posicionJugador)})
     game.onTick(500, "animacionCyclops", {self.animacion()})
   }

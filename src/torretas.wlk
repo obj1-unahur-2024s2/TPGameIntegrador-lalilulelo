@@ -80,6 +80,8 @@ class Torret inherits Elemento {
   method esTrinchera() = false
 
   method esTorreta() = true
+
+  method esColisionable() = true
 }
 
 class Trinchera {
