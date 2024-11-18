@@ -1,7 +1,7 @@
 import wollok.game.*
 
 object jugador {
-    var posicion = game.origin()
+    var posicion = game.origin().up(1)
     var salud = 100
     var frame = 1
     const fotogramas = 2

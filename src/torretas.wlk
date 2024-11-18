@@ -2,7 +2,7 @@ import wollok.game.*
 import elementos.*
 import obstaculos.*
 
-class Torret inherits Obstaculo {
+class Torret inherits ElementoColisionable {
   const property idTorreta
   const property nroTorreta
   const property rangoAtaque
