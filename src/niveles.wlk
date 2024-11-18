@@ -1,4 +1,3 @@
-import torretas.*
 import jugador.*
 import wollok.game.*
 
@@ -17,7 +16,6 @@ class Nivel {
   
   method spawnearTorretas() {
     listaTorretas.forEach({enemigo => game.addVisual(enemigo)})
-
   }
 
   method spawnearMonedas() {
