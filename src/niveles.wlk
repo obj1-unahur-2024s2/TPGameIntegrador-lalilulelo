@@ -1,3 +1,8 @@
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
 import jugador.*
 import obstaculos.*
 import wollok.game.*
@@ -36,17 +41,28 @@ class Nivel {
   }
 
   method rodearMapa() {
-        const obstaculoa new Obstaculo(posicion = game.at(0, 0), imagen = "roca.png")
-        const obstaculob new Obstaculo(posicion = game.at(1, 0), imagen = "roca.png")
-        const obstaculoc new Obstaculo(posicion = game.at(2, 0), imagen = "roca.png")
-        const obstaculod new Obstaculo(posicion = game.at(3, 0), imagen = "roca.png")
-        const obstaculoe new Obstaculo(posicion = game.at(4, 0), imagen = "roca.png")
-        const obstaculof new Obstaculo(posicion = game.at(5, 0), imagen = "roca.png")
-        const obstaculog new Obstaculo(posicion = game.at(6, 0), imagen = "roca.png")
-        const obstaculoh new Obstaculo(posicion = game.at(7, 0), imagen = "roca.png")
-        const obstaculoi new Obstaculo(posicion = game.at(8, 0), imagen = "roca.png")
-        const obstaculoj new Obstaculo(posicion = game.at(9, 0), imagen = "roca.png")
-        const obstaculok new Obstaculo(posicion = game.at(10, 0), imagen = "roca.png")
+        const obstaculoa = new Obstaculo(posicion = game.at(0,-1))
+        game.addVisual(obstaculoa)
+        const obstaculob = new Obstaculo(posicion = game.at(1,-1))
+        game.addVisual(obstaculob)
+        const obstaculoc = new Obstaculo(posicion = game.at(2,-1))
+        game.addVisual(obstaculoc)
+        const obstaculod = new Obstaculo(posicion = game.at(3,-1))
+        game.addVisual(obstaculod)
+        const obstaculoe = new Obstaculo(posicion = game.at(4,-1))
+        game.addVisual(obstaculoe)
+        const obstaculof = new Obstaculo(posicion = game.at(5,-1))
+        game.addVisual(obstaculof)
+        const obstaculog = new Obstaculo(posicion = game.at(6,-1))
+        game.addVisual(obstaculog)
+        const obstaculoh = new Obstaculo(posicion = game.at(7,-1))
+        game.addVisual(obstaculoh)
+        const obstaculoi = new Obstaculo(posicion = game.at(8,-1))
+        game.addVisual(obstaculoi)
+        const obstaculoj = new Obstaculo(posicion = game.at(9,-1))
+        game.addVisual(obstaculoj)
+        const obstaculok = new Obstaculo(posicion = game.at(10,-1))
+        game.addVisual(obstaculok)
     }
   
   method fondo() {
