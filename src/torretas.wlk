@@ -1,6 +1,5 @@
 import wollok.game.*
 import elementos.*
-import enemigos.*
 
 class Torret inherits Elemento {
   const property idTorreta

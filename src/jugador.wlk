@@ -2,6 +2,7 @@ import wollok.game.*
 
 object jugador {
     var property posicion = game.origin()
+    var salud = 100
     var frame = 1
     const fotogramas = 2
 
@@ -13,6 +14,8 @@ object jugador {
     method position(newPosition) {
         posicion = newPosition
     }
+
+    method salud() = salud
 
     method cambiarImagen(nuevaimagen) {
         imagen = nuevaimagen
@@ -56,5 +59,8 @@ object jugador {
     method interactuar() {
         game.onCollideDo(self, {elemento => elemento.interactuarConJugador(self)})
     }
-}
 
+    method recibirDanio(danioRecibido) {
+        salud -= danioRecibido
+    }
+}

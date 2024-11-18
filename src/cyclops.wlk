@@ -6,28 +6,32 @@ import wollok.game.*
 class Enemigo inherits Elemento {
   const property velocidadMovimiento
   const property danio = 999999
-
-  method imagen() = "cyclops.png"
+  const imagen = "cyclops"
+  var frame = 1
+  
+  method imagen() = imagen + frame + ".png"
 
   method seguirJugadorConstantemente(posicionJugador) {
     game.onTick(velocidadMovimiento, "persecucion", {self.seguirJugador(posicionJugador)})
+    game.onTick(500, "animacionCyclops", {self.animacion()})
   }
   
   method seguirJugador(posicionJugador) {
     const jugadorX = posicionJugador.x()
 		const jugadorY = posicionJugador.y()
 				
-		if(jugadorX < posicion.x()){self.posicion(posicion.left(1))}
+		if(jugadorY > posicion.y()){self.posicion(posicion.up(1))}
     else if(jugadorX > posicion.x()){self.posicion(posicion.right(1))}
     else if(jugadorY < posicion.y()){self.posicion(posicion.down(1))}
-    else (jugadorY > posicion.y()){self.posicion(posicion.up(1))}
+    else (jugadorX < posicion.x()){self.posicion(posicion.left(1))}
   }
 
-  method atacar() {
-    game.onCollideDo(self, {elemento => if(elemento.esJugador()) self.chocarConJugador()})
+  method animacion() {
+    new Range(start = 1, end = 5).anyOne()
+    frame = Range
   }
 
-  method chocarConJugador() {
+  override method interactuarConJugador(jugador) {
     jugador.recibirDanio(self.danio())
   }
 }
