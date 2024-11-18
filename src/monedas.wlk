@@ -10,4 +10,6 @@ class Moneda inherits Elemento{
         game.removeVisual(self)
     }
 
+    method esColisionable() = false
+
 }

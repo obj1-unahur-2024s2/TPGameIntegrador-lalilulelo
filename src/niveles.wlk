@@ -3,23 +3,28 @@ import wollok.game.*
 
 class Nivel {
 
-  const listaMonedas = []
-  const listaTorretas = []
-
-
-
+  const listaMonedas  
+  const listaTorretas  
+  const listaObstaculos
+  
   method iniciar() { 
     self.spawnearTorretas()
     self.spawnearMonedas()
-    game.addVisualCharacter(jugador)
+    self.spawnearObstaculos()
+    game.addVisual(jugador)
+    jugador.controlesJugador()
   }
   
   method spawnearTorretas() {
-    listaTorretas.forEach({enemigo => game.addVisual(enemigo)})
+    listaTorretas.forEach({torreta => game.addVisual(torreta)})
   }
 
   method spawnearMonedas() {
     listaMonedas.forEach({moneda => game.addVisual(moneda)})
+  }
+
+  method spawnearObstaculos() {
+    listaObstaculos.forEach({obstaculo => game.addVisual(obstaculo)})
   }
   
   method fondo() {

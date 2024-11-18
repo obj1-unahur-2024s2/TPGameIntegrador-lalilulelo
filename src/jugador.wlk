@@ -1,11 +1,20 @@
 import wollok.game.*
 
 object jugador {
-    var property posicion = game.origin()
+    var posicion = game.origin()
     var salud = 100
     var frame = 1
     const fotogramas = 2
+    var puntos = 0
 
+
+    method initialize() {
+        game.onCollideDo(self, {elemento => elemento.interactuarConJugador(self)})
+    }
+
+    method sumarPuntos(valor) {
+        puntos += valor
+    }
 
     var imagen = "soldier_step"
 
@@ -14,6 +23,8 @@ object jugador {
     method position(newPosition) {
         posicion = newPosition
     }
+
+    method position() = posicion
 
     method salud() = salud
 
@@ -26,7 +37,6 @@ object jugador {
         keyboard.down().onPressDo({self.moverAbajo()})
         keyboard.left().onPressDo({self.moverIzquierda()})
         keyboard.right().onPressDo({self.moverDerecha()})
-        keyboard.space().onPressDo({self.interactuar()})
     }
 
     method esJugador() = true
@@ -35,7 +45,7 @@ object jugador {
 
     method moverArriba() {
         if(!game.getObjectsIn(posicion.up(1)).any({e => e.esColisionable()})){
-            self.position(posicion.up())
+            self.position(posicion.up(1))
             self.moverse()
         }
     }
@@ -63,12 +73,8 @@ object jugador {
 
     method moverse() {
         if(frame == fotogramas) frame = 1 else frame = frame + 1
-        self.cambiarImagen("soldier_step" + frame + ".png")
     }
 
-    method interactuar() {
-        game.onCollideDo(self, {elemento => elemento.interactuarConJugador(self)})
-    }
 
     method recibirDanio(danioRecibido) {
         salud -= danioRecibido

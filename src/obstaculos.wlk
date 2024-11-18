@@ -1,6 +1,9 @@
 import src.elementos.*
-class Obstaculos inherits Elemento {
+class Obstaculo inherits Elemento {
     method esColisionable() = true
+    const imagen = "trinchera.png"
+
+    method image() = imagen
 
     override method interactuarConJugador(jugador) {
         if(posicion.y() == 0) {
