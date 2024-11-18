@@ -3,6 +3,8 @@ import jugador.*
 import wollok.game.*
 class Obstaculo inherits Elemento {
     const property imagen
+    
+    method image() = imagen
 
     method esColisionable() = true
 
@@ -21,8 +23,11 @@ class Obstaculo inherits Elemento {
 
 class Trampa inherits Elemento {
     const property danio
+    const property imagen
 
     method esColisionable() = false
+
+    method imagen() = imagen
 
     override method interactuarConJugador(jugador) {
         jugador.recibirDanio(self.danio())

@@ -2,7 +2,7 @@ import wollok.game.*
 import elementos.*
 import obstaculos.*
 
-class Torret inherits Obstaculos {
+class Torret inherits Obstaculo {
   const property idTorreta
   const property nroTorreta
   const property rangoAtaque
@@ -11,8 +11,6 @@ class Torret inherits Obstaculos {
   var direccion
   const property areaDeAtaque = [posicion]
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
-
-  method image() = img
 
   method definirDireccion() {
     direccion = game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).direccion()

@@ -1,4 +1,3 @@
-
 import wollok.game.*
 import niveles.*
 import src.monedas.*
@@ -11,8 +10,9 @@ program TowerDefense {
   game.cellSize(234)
   const moneda1 = new Moneda(valor = 20, posicion = game.origin())
   const moneda2 = new Moneda(valor = 20, posicion = game.origin().right(1))
-  const obstaculo1 = new Obstaculo(posicion = game.center().up(1))
-  const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
+  const obstaculo1 = new Obstaculo(posicion = game.center().up(1), imagen = "roca.png")
+  const obstaculo2 = new Obstaculo(posicion = game.center().down(1), imagen = "roca.png")
+  const trampa1 = new Trampa(posicion = game.center().down(1), imagen = "road1.png", danio = 1)
   const nivel = new Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2])
   game.start()
   nivel.iniciar()
