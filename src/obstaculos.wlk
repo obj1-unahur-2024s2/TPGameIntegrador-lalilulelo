@@ -1,5 +1,5 @@
 import src.elementos.*
-class Obstaculo inherits Elemento {
+class Obstaculos inherits Elemento {
     method esColisionable() = true
 
     override method interactuarConJugador(jugador) {
