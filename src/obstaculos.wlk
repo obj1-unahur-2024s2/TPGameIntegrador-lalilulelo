@@ -1,6 +1,6 @@
 import jugador.*
 import elementos.*
-class Obstaculos inherits Elemento{
+class Obstaculo inherits Elemento{
     method esColisionable() = true
 
     override method interactuarConJugador(jugador) {

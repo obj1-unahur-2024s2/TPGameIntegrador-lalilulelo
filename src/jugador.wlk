@@ -22,11 +22,11 @@ object jugador {
     }
 
     method controlesJugador() {
-    keyboard.up().onPressDo({self.moverArriba()})
-    keyboard.down().onPressDo({self.moverAbajo()})
-    keyboard.left().onPressDo({self.moverIzquierda()})
-    keyboard.right().onPressDo({self.moverDerecha()})
-    keyboard.space().onPressDo({self.interactuar()})
+        keyboard.up().onPressDo({self.moverArriba()})
+        keyboard.down().onPressDo({self.moverAbajo()})
+        keyboard.left().onPressDo({self.moverIzquierda()})
+        keyboard.right().onPressDo({self.moverDerecha()})
+        keyboard.space().onPressDo({self.interactuar()})
     }
 
     method esJugador() = true
@@ -34,23 +34,31 @@ object jugador {
     method esColisionable() = false
 
     method moverArriba() {
-        self.position(posicion.up())
-        self.moverse()
+        if(!game.getObjectsIn(posicion.up(1)).any({e => e.esColisionable()})){
+            self.position(posicion.up())
+            self.moverse()
+        }
     }
 
     method moverAbajo() {
-        self.position(posicion.down())
-        self.moverse()
+        if(!game.getObjectsIn(posicion.down(1)).any({e => e.esColisionable()})){
+            self.position(posicion.down(1))
+            self.moverse()
+        }
     }
 
     method moverIzquierda() {
-        self.position(posicion.left())
-        self.moverse()
+        if(!game.getObjectsIn(posicion.left(1)).any({e => e.esColisionable()})){
+            self.position(posicion.left(1))
+            self.moverse()
+        }
     }
 
     method moverDerecha() {
-        self.position(posicion.right())
-        self.moverse()
+        if(!game.getObjectsIn(posicion.right(1)).any({e => e.esColisionable()})){
+            self.position(posicion.right(1))
+            self.moverse()
+        }
     }
 
     method moverse() {
