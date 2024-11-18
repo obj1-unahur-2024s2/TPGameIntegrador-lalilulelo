@@ -1,4 +1,4 @@
-import enemigos.*
+
 import wollok.game.*
 import niveles.*
 
@@ -7,11 +7,9 @@ program TowerDefense {
   game.width(10)
   game.height(10)
   game.cellSize(234)
-  const enemigo = new Enemigo(idEnemigo = 1, velocidadDeMovimiento = 1000, salud = 100, posicion = game.center())
-  const enemigo2 = new Enemigo(idEnemigo = 2, velocidadDeMovimiento = 1000, salud = 100, posicion = game.center())
  
   const nivel = new Nivel(
-    listaEnemigos = [enemigo, enemigo2]
+    
   )
   game.start()
   nivel.iniciar()
