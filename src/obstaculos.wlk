@@ -1,9 +1,10 @@
 import src.elementos.*
+import jugador.*
+import wollok.game.*
 class Obstaculo inherits Elemento {
-    method esColisionable() = true
-    const imagen = "trinchera.png"
+    const property imagen
 
-    method image() = imagen
+    method esColisionable() = true
 
     override method interactuarConJugador(jugador) {
         if(posicion.y() == 0) {
@@ -16,4 +17,14 @@ class Obstaculo inherits Elemento {
             jugador.posicion(jugador.posicion().x()-1, jugador.posicion().y())
         }
     }
+}
+
+class Trampa inherits Elemento {
+    const property danio
+
+    method esColisionable() = false
+
+    override method interactuarConJugador(jugador) {
+        jugador.recibirDanio(self.danio())
+  }
 }
