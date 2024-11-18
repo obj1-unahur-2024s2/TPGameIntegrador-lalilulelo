@@ -1,25 +1,27 @@
 import torretas.*
-import enemigos.*
-import fortalezas.*
 import jugador.*
 import wollok.game.*
 
 class Nivel {
-  const property camino = []
-  const listaEnemigos = []
-  const listaTrincheras = []
-  const property fortalezas
-  
-  method iniciar() {
-    game.addVisual(listaEnemigos.first())
-    game.addVisual(listaTrincheras.first())
-    game.addVisual(fortalezas.first())
+
+  const listaMonedas = []
+  const listaTorretas = []
+
+
+
+  method iniciar() { 
+    self.spawnearTorretas()
+    self.spawnearMonedas()
     game.addVisualCharacter(jugador)
-    listaEnemigos.first().seguirCamino(self)
   }
   
-  method spawnearEnemigos() {
-    listaEnemigos.remove(listaEnemigos.first())
+  method spawnearTorretas() {
+    listaTorretas.forEach({enemigo => game.addVisual(enemigo)})
+
+  }
+
+  method spawnearMonedas() {
+    listaMonedas.forEach({moneda => game.addVisual(moneda)})
   }
   
   method fondo() {
