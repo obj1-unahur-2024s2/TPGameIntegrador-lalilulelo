@@ -1,5 +1,3 @@
-// src/cyclops.wlk
-// src/cyclops.wlk
 import niveles.*
 import elementos.*
 import jugador.*

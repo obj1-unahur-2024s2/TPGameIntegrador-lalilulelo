@@ -1,7 +1,8 @@
 import wollok.game.*
 import elementos.*
+import obstaculos.*
 
-class Torret inherits Elemento {
+class Torret inherits Obstaculos {
   const property idTorreta
   const property nroTorreta
   const property rangoAtaque
@@ -74,37 +75,6 @@ class Torret inherits Elemento {
     img = "torret" + nroTorreta.toString() + "_frame1_" + direccion.toString() + ".png"
     game.removeTickEvent("animacionTorreta" + idTorreta)
   }
-  
-  method esEnemigo() = false
-
-  method esTrinchera() = false
-
-  method esTorreta() = true
-
-  method esColisionable() = true
-}
-
-class Trinchera {
-  var estaVacia = true
-  const property direccion
-  var property posicion
-  const img = "trinchera.png"
-  
-  method image() = img
-  
-  method position() = posicion
-
-  method estaVacia() = estaVacia
-
-  method llenarTrinchera() {
-    estaVacia = false
-  }
-
-  method esEnemigo() = false
-
-  method esTrinchera() = true
-
-  method esTorreta() = false
 }
 
 class HitBox inherits Elemento{

@@ -2,7 +2,7 @@ import wollok.game.*
 
 
 class Elemento {
-    var property posicion
+  var property posicion
   
   method position() = posicion
 
