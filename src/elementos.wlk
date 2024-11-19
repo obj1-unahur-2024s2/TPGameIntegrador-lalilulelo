@@ -9,6 +9,10 @@ class Elemento {
   method interactuarConJugador(jugador) {
     
   }
+
+  method esColisionable() = false
+
+  method esJugador() = false
 }
 
 
@@ -21,7 +25,7 @@ class Background {
 }
 
 class ElementoColisionable inherits Elemento {
-  method esColisionable() = true
+  override method esColisionable() = true
 
     override method interactuarConJugador(jugador) {
         if(posicion.y() == 0) {

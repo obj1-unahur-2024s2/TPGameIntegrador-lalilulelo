@@ -11,11 +11,15 @@ class Trampa inherits Elemento {
     const property danio
     const imagen = "pinchos.png"
 
-    method esColisionable() = false
-
     method image() = imagen
 
     override method interactuarConJugador(jugador) {
         jugador.recibirDanio(self.danio())
   }
+}
+
+class ParedInvisible inherits ElementoColisionable {
+    const imagen = "hitBox.png"
+
+    method image() = imagen
 }

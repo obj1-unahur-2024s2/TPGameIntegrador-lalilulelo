@@ -92,10 +92,4 @@ class HitBox inherits Elemento{
   method ordenarAtaque() {
     return game.getObjectsIn(cordenadasDeTorreta).filter({e => e.esTorreta()}).first().atacar()
   }
-
-  method esEnemigo() = false
-
-  method esTrinchera() = false
-
-  method esTorreta() = false
 }

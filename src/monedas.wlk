@@ -9,7 +9,4 @@ class Moneda inherits Elemento{
         jugador.sumarPuntos(valor)
         game.removeVisual(self)
     }
-
-    method esColisionable() = false
-
 }

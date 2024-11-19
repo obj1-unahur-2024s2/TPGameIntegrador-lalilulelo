@@ -78,5 +78,17 @@ object jugador {
 
     method recibirDanio(danioRecibido) {
         salud -= danioRecibido
+        self.barraDeSalud()
+        if(salud == 0) {
+            self.morir()
+        }
+    }
+
+    method barraDeSalud() {
+        
+    }
+
+    method morir() {
+        game.removeVisual(self)
     }
 }
