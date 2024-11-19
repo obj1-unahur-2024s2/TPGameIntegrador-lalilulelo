@@ -4,6 +4,7 @@ import niveles.*
 import src.monedas.*
 import src.obstaculos.*
 import src.puerta.*
+import src.jugador.*
 
 program TowerDefense {
   game.title("Tower Defense")
@@ -13,4 +14,5 @@ program TowerDefense {
   game.boardGround("Stage1.png")
   game.start()
   nivel1.iniciar()
+  jugador.controlesJugador()
 }

@@ -25,8 +25,12 @@ class Nivel {
     game.addVisual(puerta)
     ciclope.seguirJugadorConstantemente(jugador.position())
     game.addVisual(jugador)
-    jugador.controlesJugador()
     game.addVisual(barraDeVida)
+  }
+
+  method pasarASiguienteNivel() {
+        nivel1.terminarNivel()
+        nivel2.iniciar()
   }
   
   method spawnearTorretas() {
@@ -166,7 +170,6 @@ class Nivel {
 
  method terminarNivel() {
   game.allVisuals().forEach({e => game.removeVisual(e)})
-  game.clear()
  }
 }
 

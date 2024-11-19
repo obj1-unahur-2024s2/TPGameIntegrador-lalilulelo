@@ -10,7 +10,7 @@ class Teletransportador inherits Elemento{
 
     override method interactuarConJugador(jugador) {
         jugador.position(game.origin().up(1))
-        nivel1.terminarNivel()
-        nivel2.iniciar()
+        nivel1.pasarASiguienteNivel()
     }
+
 }
