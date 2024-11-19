@@ -1,3 +1,4 @@
+import cyclops.*
 import wollok.game.*
 import niveles.*
 import src.monedas.*
@@ -16,8 +17,9 @@ program TowerDefense {
   const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
   const trampa1 = new Trampa(posicion = game.center().left(1), danio = 10)
   const puerta1 = new Teletransportador(posicion = game.at(5,2))
-  const nivel = new Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puerta1)
-  const nivel2 = new Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1], listaTrampas = [], puerta = [])
+  const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
+  const nivel = new Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puerta1, ciclope = ciclope1)
+  const nivel2 = new Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1], listaTrampas = [], puerta = [], ciclope = ciclope1)
   
   game.start()
   nivel.iniciar()

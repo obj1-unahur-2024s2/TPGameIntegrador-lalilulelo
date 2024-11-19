@@ -7,7 +7,7 @@ import wollok.game.*
 class Ciclope inherits Elemento {
   const property velocidadMovimiento
   const img = "cyclops1.png"
-  const danio = 999999
+  const danio = 100
   
   method jugadorX() = jugador.position().x()
   method jugadorY() = jugador.position().y()

@@ -1,3 +1,6 @@
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
 import jugador.*
 import obstaculos.*
 import wollok.game.*
@@ -8,6 +11,7 @@ class Nivel {
   const listaTorretas  
   const listaObstaculos
   const listaTrampas
+  const ciclope
   const puerta
   
   method iniciar() { 
@@ -16,6 +20,8 @@ class Nivel {
     self.spawnearObstaculos()
     self.rodearMapa()
     self.spawnearTrampas()
+    game.addVisual(ciclope)
+    ciclope.seguirJugadorConstantemente(jugador.position())
     game.addVisual(jugador)
     jugador.controlesJugador()
   }

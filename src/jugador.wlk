@@ -1,4 +1,3 @@
-// src/jugador.wlk
 import wollok.game.*
 
 object jugador {
@@ -78,7 +77,7 @@ object jugador {
 
 
     method recibirDanio(danioRecibido) {
-        salud -= danioRecibido
+        salud -= 0.max(danioRecibido)
         self.barraDeSalud()
         if(salud == 0) {
             self.morir()
