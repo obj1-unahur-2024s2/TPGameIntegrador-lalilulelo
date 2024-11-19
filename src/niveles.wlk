@@ -1,9 +1,9 @@
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
 import jugador.*
 import obstaculos.*
 import wollok.game.*
+import src.monedas.*
+import src.puerta.*
+import cyclops.*
 
 class Nivel {
 
@@ -21,6 +21,7 @@ class Nivel {
     self.rodearMapa()
     self.spawnearTrampas()
     game.addVisual(ciclope)
+    game.addVisual(puerta)
     ciclope.seguirJugadorConstantemente(jugador.position())
     game.addVisual(jugador)
     jugador.controlesJugador()
@@ -164,4 +165,24 @@ class Nivel {
  method terminarNivel() {
   game.clear()
  }
+}
+
+object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puerta1, ciclope = ciclope1) {
+  const moneda1 = new Moneda(valor = 20, posicion = game.origin())
+  const moneda2 = new Moneda(valor = 20, posicion = game.origin().right(1))
+  const obstaculo1 = new Obstaculo(posicion = game.center().up(1))
+  const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
+  const trampa1 = new Trampa(posicion = game.center().left(1))
+  const puerta1 = new Teletransportador(posicion = game.at(5,2))
+  const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
+}
+
+object nivel2 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puerta1, ciclope = ciclope1) {
+  const moneda1 = new Moneda(valor = 20, posicion = game.origin())
+  const moneda2 = new Moneda(valor = 20, posicion = game.origin().right(1))
+  const obstaculo1 = new Obstaculo(posicion = game.center().up(1))
+  const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
+  const trampa1 = new Trampa(posicion = game.center().left(1))
+  const puerta1 = new Teletransportador(posicion = game.at(5,2))
+  const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
 }
