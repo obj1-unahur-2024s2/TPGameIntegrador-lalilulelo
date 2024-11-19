@@ -38,7 +38,7 @@ object jugador {
         keyboard.left().onPressDo({self.moverIzquierda()})
         keyboard.right().onPressDo({self.moverDerecha()})
 
-        // para probar si la vida baja cuando le disparan al jugador ( FUNCIONO A LA PRIMERA!!!!!!!!!!!! :D)
+        // para probar si la vida baja cuando le disparan al jugador ( FUNCIONA!!!!!!!!!!!!!!!!!!!!!!!!!!!!! :D)
         keyboard.q().onPressDo { game.say(self, salud.toString()) }
     }
 

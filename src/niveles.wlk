@@ -16,7 +16,7 @@ class Nivel {
   }
   
   method spawnearTorretas() {
-    listaTorretas.forEach({torreta => game.addVisual(torreta)})
+    listaTorretas.forEach({torreta => torreta.crearTorreta(torreta)}) 
   }
 
   method spawnearMonedas() {
