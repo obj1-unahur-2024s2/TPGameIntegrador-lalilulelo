@@ -2,17 +2,19 @@ import wollok.game.*
 import elementos.*
 import obstaculos.*
 
-object gestorIds{
-	
-	method nuevoId(){
-		return 1.randomUpTo(10000).truncate(0)
-		//Crea un nuevo ID randomizado, capas seria mejor si la id es un numero que siempre sube cada vez que se usa, para pensar...
-	}
-	
+object gestorDeIds {
+    var ultimoId = 0
+
+    method nuevoId() {
+        ultimoId = ultimoId + 1
+        return ultimoId
+    }
 }
 
-class Torreta inherits Obstaculos {
-  var property idTorreta = gestorIds.nuevoId()
+
+class Torreta inherits Obstaculo {
+  const property esTorreta = true 
+  var property idTorreta = gestorDeIds.nuevoId()
   const property nroTorreta
   const property rangoAtaque
   var copiaRangoAtaque = rangoAtaque
@@ -21,13 +23,18 @@ class Torreta inherits Obstaculos {
   const property areaDeAtaque = [posicion]
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
 
-  method image() = img
+  override method image() = img
 
   method definirDireccion() {
     direccion = game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).direccion()
   }
 
-  method crearAreaDeDisparo() {
+  method crearTorreta(torreta){
+    game.addVisual(torreta)
+    self.crearAreaDeDisparo()
+  }
+
+   method crearAreaDeDisparo() {
     if (copiaRangoAtaque != 0 && direccion == 1) {
       self.crearAreaDeDisparoUp()
     } if (copiaRangoAtaque != 0 && direccion == 2) {
@@ -39,12 +46,13 @@ class Torreta inherits Obstaculos {
     }
   }
 
+
   method crearAreaDeDisparoUp() {
     copiaRangoAtaque -= 1
     areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
     const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
     game.addVisual(hitBox)
-    hitBox.detectarJugadorContinuamente()
+    hitBox.detectarEnemigoContinuamente()
     self.crearAreaDeDisparo()
   }
 
@@ -53,7 +61,7 @@ class Torreta inherits Obstaculos {
     areaDeAtaque.add(game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y()))
     const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
     game.addVisual(hitBox)
-    hitBox.detectarJugadorContinuamente()
+    hitBox.detectarEnemigoContinuamente()
     self.crearAreaDeDisparo()
   }
 
@@ -62,7 +70,7 @@ class Torreta inherits Obstaculos {
     areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1))
     const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
     game.addVisual(hitBox)
-    hitBox.detectarJugadorContinuamente()
+    hitBox.detectarEnemigoContinuamente()
     self.crearAreaDeDisparo()
   }
 
@@ -71,14 +79,15 @@ class Torreta inherits Obstaculos {
     areaDeAtaque.add(game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y()))
     const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
     game.addVisual(hitBox)
-    hitBox.detectarJugadorContinuamente()
+    hitBox.detectarEnemigoContinuamente()
     self.crearAreaDeDisparo()
   }
+
 
   method atacar() {
     img = "torret" + nroTorreta.toString() + "_frame2_" + direccion.toString() + ".png"
     game.onTick(500, "animacionTorreta" + idTorreta, {self.animacionAtaque()})
-
+    self.dispararProyectil()
   }
 
   method animacionAtaque() {
@@ -87,24 +96,23 @@ class Torreta inherits Obstaculos {
   }
 
   method dispararProyectil(){
-		const bala = new Proyectil(direccion = direccion, danio = self.danio(), posicion = self.posicion())
-		game.addVisual(bala)
-		game.onCollideDo(bala,{jugador => jugador.interactuarConJugador(self)})
+    const bala = new Proyectil(direccion = direccion, danio = self.danio(), posicion = self.posicion(), idBala = gestorDeIds.nuevoId())
+    game.addVisual(bala)
+    bala.moverBala()
     //game.onCollideDo(bala,{jugador => jugador.recibirDanio(self.danio())})
 	}
 }
 
-
-
 class HitBox inherits Elemento{
   const property cordenadasDeTorreta
-  method image() = "hitBox.png"
+  // usar "hitBoz.png" cuando ya no haga falta probar las HitBoxes de las torretas.
+  method image() = "road1.png"
 
   method position(nuevaPosicion) {
     posicion = nuevaPosicion
   }
 
-  method detectarJugadorContinuamente() {
+  method detectarEnemigoContinuamente() {
     game.onCollideDo(self, {
       elemento => if(elemento.esJugador()) self.ordenarAtaque()
     })
@@ -123,28 +131,31 @@ class HitBox inherits Elemento{
 }
 
 class Proyectil inherits Elemento{
-  var property idBala =  gestorIds.nuevoId()
+  const imagen = "coin.png"
+  method image() = imagen
+
+  var property idBala
   // daño , velocidad de la bala y direccion a al que se mueve y de donde sale creo y la id propia de la bala
   const property danio
   var property direccion
   // const property velocidad
-  method moverDireccion(){
-		// eliminar el proyectil cuando encuentre un objeto colisionable (creo)  
-    if(game.getObjectsIn(posicion.left(1)).any({e => e.esColisionable()})){
-			self.borrarse()
-		}	
-		else{posicion = self.siguientePosicion(self.direccion())}
-		// sino se choco con nada hace que la posicion cambie dependiendo de la direccion de la bala
-	}
-  method borrarse() {
-    if(game.hasVisual(self)){
-			game.removeVisual(self)
-      // todavia no me meti con las id porque me dan miedo
-			game.removeTickEvent("movimientoBala" + idBala)
-		}
+
+  method initialize(){
+    //"movimientoBala"+ idBala.toString()
+    game.onTick(50,"coin,png",{self.moverBala()})
+    }
+
+  method moverBala() {
+    if(game.getObjectsIn(self.siguientePosicion(self.direccion())).any({e => e.esColisionable()})){
+      self.borrarse()
+    }
+     else{posicion = self.siguientePosicion(self.direccion())}
+    // sino se choco con nada hace que la posicion cambie dependiendo de la direccion de la bala
   }
 
   // parecido a lo que hizo lauti con las hitbox 1 = arriba, 2 = derecha, 3 = abajo y 4 = izquierda
+
+  // alternativamente podriamos hacer los objetos arriba derecha abajo e izquierda, y que devuelvan esto, pero me da pereza, sigo creyendo que los COLORES DE UN AUTO NO DEBERIAN SER OBJETOS(estas re ardido porque desaprobaste)
   method siguientePosicion(enDireccion) {
     var ret = []
     if (enDireccion == 1){
@@ -161,4 +172,24 @@ class Proyectil inherits Elemento{
     }
     return ret
   }  
+
+  method borrarse() {
+    if(game.hasVisual(self)){
+	game.removeVisual(self)
+      // todavia no me meti con las id porque me dan miedo. eso es mentira ya lo agragaste 
+	game.removeTickEvent("movimientoBala" + idBala)
+		}
+  }
+
+  override method interactuarConJugador(jugador) {
+    jugador.recibirDanio(self.danio())
+    self.borrarse()
+  }
+
+  method esEnemigo() = false
+
+  method esTrinchera() = false
+
+  method esTorreta() = false
+
 }
