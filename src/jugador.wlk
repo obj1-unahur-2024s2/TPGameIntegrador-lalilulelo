@@ -96,8 +96,9 @@ object jugador {
 
 object barraDeVida {
         const posicion = game.at(0, 12)
+        const img = "barraDeVida"
 
         method position() = posicion
 
-        method image() = "barraDeVida1.png"
+        method image() = img + jugador.salud().toString() + ".png"
     }
