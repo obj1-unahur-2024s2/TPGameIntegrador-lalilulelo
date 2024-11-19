@@ -1,4 +1,3 @@
-// src/jugador.wlk
 import wollok.game.*
 
 object jugador {
@@ -8,6 +7,9 @@ object jugador {
     const fotogramas = 2
     var puntos = 0
     var property nivelActual = 0
+    const damageAud = "damage.mp3"
+    const stepAud = "step.mp3"
+    const diedAud = "died.mp3"
 
 
     method initialize() {
@@ -16,7 +18,7 @@ object jugador {
 
     method sumarPuntos(valor) {
         puntos = 100.min(puntos + valor)
-        if(puntos >= 50) {
+        if(puntos == 50) {
             nivelActual.ciclope().despertar()
         }
         if(puntos == 100) {
@@ -60,6 +62,7 @@ object jugador {
         if(!game.getObjectsIn(posicion.up(1)).any({e => e.esColisionable()})){
             self.position(posicion.up(1))
             self.moverse()
+            game.sound(stepAud).play()
         }
     }
 
@@ -67,6 +70,7 @@ object jugador {
         if(!game.getObjectsIn(posicion.down(1)).any({e => e.esColisionable()})){
             self.position(posicion.down(1))
             self.moverse()
+            game.sound(stepAud).play()
         }
     }
 
@@ -74,6 +78,7 @@ object jugador {
         if(!game.getObjectsIn(posicion.left(1)).any({e => e.esColisionable()})){
             self.position(posicion.left(1))
             self.moverse()
+            game.sound(stepAud).play()
         }
     }
 
@@ -81,6 +86,7 @@ object jugador {
         if(!game.getObjectsIn(posicion.right(1)).any({e => e.esColisionable()})){
             self.position(posicion.right(1))
             self.moverse()
+            game.sound(stepAud).play()
         }
     }
 
@@ -93,10 +99,12 @@ object jugador {
         if(salud == 0) {
             self.morir()
         }
+        game.sound(damageAud).play()
     }
 
     method morir() {
         game.removeVisual(self)
+        game.sound(diedAud).play()
     }
 }
 

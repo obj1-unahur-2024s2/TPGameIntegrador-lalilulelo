@@ -8,6 +8,7 @@ class Ciclope inherits Elemento {
   const property velocidadMovimiento
   const img = "cyclops1.png"
   const danio = 100
+  const cyclopsAwake = "cyclops.mp3"
   
   method jugadorX() = jugador.position().x()
   method jugadorY() = jugador.position().y()
@@ -33,6 +34,7 @@ class Ciclope inherits Elemento {
 
   method despertar() {
     self.seguirJugadorConstantemente(jugador.position())
+    game.sound(cyclopsAwake).play()
   }
 
   override method interactuarConJugador(jugador) {

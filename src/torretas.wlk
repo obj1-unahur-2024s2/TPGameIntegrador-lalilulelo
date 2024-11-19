@@ -1,3 +1,4 @@
+// src/torretas.wlk
 import wollok.game.*
 import elementos.*
 import obstaculos.*
@@ -114,11 +115,16 @@ class Torreta inherits ElementoColisionable {
         velocidad = self.velocidadDeBala(),
         movimientosPosibles = self.rangoAtaque()
         )
+
+        const shootAud = "shoot.mp3"
       
     game.addVisual(bala)
+    game.sound(shootAud).play()
     controladorDeProyectiles.agregarProyectil(bala)
     bala.moverBala() // Inicia el movimiento.
   }
+
+  method esTorreta() = true
 }
 
 class HitBox inherits Elemento{

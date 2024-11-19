@@ -1,3 +1,4 @@
+// src/niveles.wlk
 import torretas.*
 import jugador.*
 import obstaculos.*
@@ -173,9 +174,10 @@ class Nivel {
  }
 }
 
-object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9], listaTrampas = [], puerta = puertaNivel1, ciclope = ciclope1) {
+object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [torreta1], listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9], listaTrampas = [], puerta = puertaNivel1, ciclope = ciclope1) {
  
-  const moneda1 = new Moneda(valor = 5, posicion = game.at(2,8))
+  const levelAud = game.sound("level.mp3")
+  const moneda1 = new Moneda(valor = 50, posicion = game.at(2,8))
   const moneda2 = new Moneda(valor = 50, posicion = game.at(2,7))
   const obstaculo1 = new Obstaculo(posicion = game.at(2,5))
   const obstaculo2 = new Obstaculo(posicion = game.at(2,6))
@@ -187,13 +189,20 @@ object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = 
   const obstaculo8 = new Obstaculo(posicion = game.at(2,9))
   const obstaculo9 = new Obstaculo(posicion = game.at(2,10))
   const trampa1 = new Trampa(posicion = game.center().left(1))
-  const torreta1 = new Torreta(nroTorreta = 1, rangoAtaque = 5, direccion = 3, velocidadDeBala = 700, posicion = game.at(2, 10))
+  const torreta1 = new Torreta(nroTorreta = 1, rangoAtaque = 5, direccion = 3, velocidadDeBala = 700, posicion = game.at(1, 10))
   const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
+  method initialize() {
+    levelAud.shouldLoop(true)
+    levelAud.volume(0.20)
+    levelAud.play()
+  }
 }
 
 object nivel2 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puertaNivel2, ciclope = ciclope1) {
   const moneda1 = new Moneda(valor = 50, posicion = game.origin())
   const moneda2 = new Moneda(valor = 50, posicion = game.origin().right(1))
+  const moneda3 = new Moneda(valor = 50, posicion = game.origin())
+  const moneda4 = new Moneda(valor = 50, posicion = game.origin().right(1))
   const obstaculo1 = new Obstaculo(posicion = game.center().up(1))
   const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
   const trampa1 = new Trampa(posicion = game.center().left(1))

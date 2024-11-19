@@ -9,7 +9,7 @@ class Obstaculo inherits ElementoColisionable {
 
 class Trampa inherits Elemento {
     const property danio = 20
-    const imagen = "trampa.png"
+    const imagen = "pinchos.png"
 
     method image() = imagen
 

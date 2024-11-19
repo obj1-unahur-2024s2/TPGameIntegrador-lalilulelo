@@ -6,6 +6,7 @@ import src.obstaculos.*
 import src.puerta.*
 import src.jugador.*
 import src.menu.*
+import src.fondo.*
 
 program GrandTeftCyclops {
   game.title("Grand Teft Cyclops")
@@ -13,6 +14,6 @@ program GrandTeftCyclops {
   game.height(15)
   game.cellSize(234)
   game.start()
-  nivel1.iniciar()
+  game.addVisual(fondo)
   jugador.controlesJugador()
 }
