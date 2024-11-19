@@ -23,7 +23,6 @@ class Nivel {
     self.spawnearTrampas()
     game.addVisual(ciclope)
     game.addVisual(puerta)
-    ciclope.seguirJugadorConstantemente(jugador.position())
     game.addVisual(jugador)
     game.addVisual(barraDeVida)
   }
@@ -173,7 +172,7 @@ class Nivel {
  }
 }
 
-object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [torreta1], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puerta1, ciclope = ciclope1) {
+object nivel1 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puerta1, ciclope = ciclope1) {
   const moneda1 = new Moneda(valor = 20, posicion = game.origin())
   const moneda2 = new Moneda(valor = 20, posicion = game.origin().right(1))
   const obstaculo1 = new Obstaculo(posicion = game.center().up(1))

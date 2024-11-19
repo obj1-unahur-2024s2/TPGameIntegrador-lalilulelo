@@ -7,7 +7,7 @@ import src.puerta.*
 import src.jugador.*
 
 program TowerDefense {
-  game.title("Tower Defense")
+  game.title("Grand Theft Cyclops")
   game.width(15)
   game.height(15)
   game.cellSize(234)

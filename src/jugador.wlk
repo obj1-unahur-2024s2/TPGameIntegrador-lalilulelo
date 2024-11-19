@@ -17,6 +17,8 @@ object jugador {
         puntos += valor
     }
 
+    method puntos() = puntos
+
     var imagen = "soldier_step"
 
     method image() = imagen + frame + ".png"
@@ -81,9 +83,15 @@ object jugador {
             self.morir()
         }
     }
-    
+
     method morir() {
         game.removeVisual(self)
+    }
+
+    method despertarCiclopsDeNivel(nivel) {
+        if(jugador.puntos == 50) {
+            nivel.ciclope().despertar()
+        }
     }
 }
 

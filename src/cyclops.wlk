@@ -31,6 +31,11 @@ class Ciclope inherits Elemento {
     if(self.jugadorX() < posicion.x()){self.posicion(posicion.left(1))}
   }
 
+  method despertar() {
+    
+    self.seguirJugadorConstantemente(jugador.position())
+  }
+
   override method interactuarConJugador(jugador) {
     jugador.recibirDanio(self.danio())
   }
