@@ -1,10 +1,3 @@
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
 import jugador.*
 import obstaculos.*
 import wollok.game.*

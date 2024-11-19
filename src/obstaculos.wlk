@@ -15,7 +15,7 @@ class Trampa inherits Elemento {
 
     override method interactuarConJugador(jugador) {
         jugador.recibirDanio(self.danio())
-  }
+    }
 }
 
 class ParedInvisible inherits ElementoColisionable {
