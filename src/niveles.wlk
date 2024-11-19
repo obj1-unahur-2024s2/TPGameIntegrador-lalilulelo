@@ -24,6 +24,7 @@ class Nivel {
     ciclope.seguirJugadorConstantemente(jugador.position())
     game.addVisual(jugador)
     jugador.controlesJugador()
+    game.addVisual(barraDeVida)
   }
   
   method spawnearTorretas() {
