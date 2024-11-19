@@ -1,3 +1,4 @@
+// src/jugador.wlk
 import wollok.game.*
 
 object jugador {
@@ -92,3 +93,11 @@ object jugador {
         game.removeVisual(self)
     }
 }
+
+object barraDeVida {
+        const posicion = game.at(0, 12)
+
+        method position() = posicion
+
+        method image() = "barraDeVida1.png"
+    }
