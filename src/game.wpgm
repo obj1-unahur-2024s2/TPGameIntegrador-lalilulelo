@@ -7,7 +7,7 @@ import src.puerta.*
 import src.jugador.*
 import src.menu.*
 
-program TowerDefense {
+program GrandTeftCyclops {
   game.title("Grand Teft Cyclops")
   game.width(15)
   game.height(15)

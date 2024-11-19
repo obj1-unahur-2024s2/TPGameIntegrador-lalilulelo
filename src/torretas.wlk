@@ -17,10 +17,12 @@ class Torreta inherits ElementoColisionable {
   const property nroTorreta
   const property rangoAtaque
   var copiaRangoAtaque = rangoAtaque
-  const property direccion
-  const property areaDeAtaque = [posicion]
   const property velocidadDeBala
+  const direccion
+  const property areaDeAtaque = [posicion]
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
+  var enCooldown = false
+  const tiempoCooldown = 1000 // Tiempo de cooldown en milisegundos.
 
   method image() = img
 
@@ -80,23 +82,43 @@ class Torreta inherits ElementoColisionable {
 
 
   method atacar() {
-    img = "torret" + nroTorreta.toString() + "_frame2_" + direccion.toString() + ".png"
-    game.onTick(500, "animacionTorreta" + idTorreta, {self.animacionAtaque()})
-    self.dispararProyectil()
-  }
+      if (!enCooldown) { // Solo dispara si no está en cooldown.
+            img = "torret" + nroTorreta.toString() + "_frame2_" + direccion.toString() + ".png"
+            game.onTick(500, "animacionTorreta" + idTorreta, { self.animacionAtaque() })
+            self.dispararProyectil()
+            self.activarCooldown()
+        }
+    }
 
   method animacionAtaque() {
     img = "torret" + nroTorreta.toString() + "_frame1_" + direccion.toString() + ".png"
     game.removeTickEvent("animacionTorreta" + idTorreta)
   }
 
-  method dispararProyectil(){
-    const bala = new Proyectil(direccion = direccion, velocidad = self.velocidadDeBala(), posicion = self.posicion(), idBala = gestorDeIds.nuevoId())
-    game.addVisual(bala)
-    bala.initialize()
-	}
+  method activarCooldown() {
+        enCooldown = true
+        game.onTick(tiempoCooldown, "cooldownTorreta" + idTorreta, { self.finalizarCooldown() })
+    }
 
-  method esTorreta() = true
+  method finalizarCooldown() {
+        enCooldown = false
+        game.removeTickEvent("cooldownTorreta" + idTorreta) // Limpieza del evento.
+    }
+    
+  method dispararProyectil() {
+      const bala = new Proyectil(
+        direccion = direccion, 
+        posicion = self.posicion(),
+        danio = 20, 
+        idBala = gestorDeIds.nuevoId(),
+        velocidad = self.velocidadDeBala(),
+        movimientosPosibles = self.rangoAtaque()
+        )
+      
+    game.addVisual(bala)
+    controladorDeProyectiles.agregarProyectil(bala)
+    bala.moverBala() // Inicia el movimiento.
+  }
 }
 
 class HitBox inherits Elemento{
@@ -117,24 +139,29 @@ class HitBox inherits Elemento{
 class Proyectil inherits Elemento{
   const imagen = "bala.png"
   method image() = imagen
-
   var property idBala
+  const property danio
   var property direccion
-  const property velocidad
-
-  method danio() = 20
+  const property velocidad 
+  var movimientosPosibles 
+  
 
   method initialize(){
-    game.onTick(50, "animacionBala" + idBala.toString(),{self.moverBala()})
-    }
+    //"movimientoBala"+ idBala.toString()
+		game.onTick(velocidad,"coin,png",{self.moverBala()})
+	}
+
+  
 
   method moverBala() {
-    if(game.getObjectsIn(self.siguientePosicion(self.direccion())).any({e => e.esColisionable()})){
-      self.borrarse()
+    if (movimientosPosibles <= 0 || game.getObjectsIn(self.siguientePosicion(self.direccion())).any({e => e.esColisionable()})) {
+        self.borrarse()
+    } else {
+        posicion = self.siguientePosicion(self.direccion())
+        movimientosPosibles -= 1 // solo puede disparar denuevo si la bala ya recorrio la mitad del camino
     }
-     else{posicion = self.siguientePosicion(self.direccion())}
-  }
-  
+}
+
   method siguientePosicion(enDireccion) {
     var ret = []
     if (enDireccion == 1){
@@ -153,14 +180,41 @@ class Proyectil inherits Elemento{
   }  
 
   method borrarse() {
-    if(game.hasVisual(self)){
-	game.removeVisual(self)
-	game.removeTickEvent("animacionBala" + idBala.toString())
-		}
-  }
+    game.removeVisual(self)
+    game.removeTickEvent("movimientoBala" + idBala)
+    controladorDeProyectiles.eliminarProyectil(self)
+}
+
 
   override method interactuarConJugador(jugador) {
-    jugador.recibirDanio(self.danio())
-    self.borrarse()
+        jugador.recibirDanio(self.danio())
+        self.borrarse()
   }
 }
+
+object controladorDeProyectiles {
+    const proyectiles = []
+
+    method moverProyectiles() {
+        proyectiles.forEach({proyectil =>
+            proyectil.moverBala()
+        })
+    }
+
+    method agregarProyectil(proyectil) {
+        proyectiles.add(proyectil)
+        if (proyectiles.size() == 1) { 
+            game.onTick(550, "moverProyectiles", { 
+                self.moverProyectiles()
+            })
+        }
+    }
+
+    method eliminarProyectil(proyectil) {
+        proyectiles.remove(proyectil)
+        if (proyectiles.isEmpty()) { 
+            game.removeTickEvent("moverProyectiles")
+        }
+    }
+}
+
