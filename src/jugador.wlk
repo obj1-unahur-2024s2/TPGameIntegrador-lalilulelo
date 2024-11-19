@@ -41,7 +41,6 @@ object jugador {
     }
 
     method esJugador() = true
-
     method esColisionable() = false
 
     method moverArriba() {
@@ -76,14 +75,13 @@ object jugador {
         if(frame == fotogramas) frame = 1 else frame = frame + 1
     }
 
-
     method recibirDanio(danioRecibido) {
         salud = 0.max(salud - danioRecibido)
         if(salud == 0) {
             self.morir()
         }
     }
-
+    
     method morir() {
         game.removeVisual(self)
     }
@@ -92,8 +90,7 @@ object jugador {
 object barraDeVida {
         const posicion = game.at(0, 12)
         const img = "barraDeVida"
-
         method position() = posicion
-
         method image() = img + jugador.salud().toString() + ".png"
+        method esColisionable() = false
     }

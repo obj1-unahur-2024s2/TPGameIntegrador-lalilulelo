@@ -13,21 +13,16 @@ object gestorDeIds {
 
 
 class Torreta inherits ElementoColisionable {
-  const property esTorreta = true 
   var property idTorreta = gestorDeIds.nuevoId()
   const property nroTorreta
   const property rangoAtaque
   var copiaRangoAtaque = rangoAtaque
-  const property danio
-  var direccion
+  const property direccion
   const property areaDeAtaque = [posicion]
+  const property velocidadDeBala
   var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
 
   method image() = img
-
-  method definirDireccion() {
-    direccion = game.getObjectsIn(posicion).filter({e => e.esTrinchera()}).direccion()
-  }
 
   method crearTorreta(torreta){
     game.addVisual(torreta)
@@ -96,20 +91,17 @@ class Torreta inherits ElementoColisionable {
   }
 
   method dispararProyectil(){
-    const bala = new Proyectil(direccion = direccion, danio = self.danio(), posicion = self.posicion(), idBala = gestorDeIds.nuevoId())
+    const bala = new Proyectil(direccion = direccion, velocidad = self.velocidadDeBala(), posicion = self.posicion(), idBala = gestorDeIds.nuevoId())
     game.addVisual(bala)
-    bala.moverBala()
-    //game.onCollideDo(bala,{jugador => jugador.recibirDanio(self.danio())})
+    bala.initialize()
 	}
+
+  method esTorreta() = true
 }
 
 class HitBox inherits Elemento{
   const property cordenadasDeTorreta
   method image() = "hitBox.png"
-
-  method position(nuevaPosicion) {
-    posicion = nuevaPosicion
-  }
 
   method detectarEnemigoContinuamente() {
     game.onCollideDo(self, {
@@ -118,7 +110,7 @@ class HitBox inherits Elemento{
   }
 
   method ordenarAtaque() {
-    return game.getObjectsIn(cordenadasDeTorreta).filter({e => e.esTorreta()}).first().atacar()
+    game.getObjectsIn(cordenadasDeTorreta).filter({e => e.esTorreta()}).first().atacar()
   }
 }
 
@@ -127,14 +119,13 @@ class Proyectil inherits Elemento{
   method image() = imagen
 
   var property idBala
-  // danio , velocidad de la bala y direccion a al que se mueve y de donde sale creo y la id propia de la bala
-  const property danio
   var property direccion
-  // const property velocidad
+  const property velocidad
+
+  method danio() = 20
 
   method initialize(){
-    //"movimientoBala"+ idBala.toString()
-    game.onTick(50,"coin,png",{self.moverBala()})
+    game.onTick(50, "animacionBala" + idBala.toString(),{self.moverBala()})
     }
 
   method moverBala() {
@@ -142,12 +133,8 @@ class Proyectil inherits Elemento{
       self.borrarse()
     }
      else{posicion = self.siguientePosicion(self.direccion())}
-    // sino se choco con nada hace que la posicion cambie dependiendo de la direccion de la bala
   }
-
-  // parecido a lo que hizo lauti con las hitbox 1 = arriba, 2 = derecha, 3 = abajo y 4 = izquierda
-
-  // alternativamente podriamos hacer los objetos arriba derecha abajo e izquierda, y que devuelvan esto, pero me da pereza, sigo creyendo que los COLORES DE UN AUTO NO DEBERIAN SER OBJETOS(estas re ardido porque desaprobaste)
+  
   method siguientePosicion(enDireccion) {
     var ret = []
     if (enDireccion == 1){
@@ -168,8 +155,7 @@ class Proyectil inherits Elemento{
   method borrarse() {
     if(game.hasVisual(self)){
 	game.removeVisual(self)
-      // todavia no me meti con las id porque me dan miedo. eso es mentira ya lo agragaste 
-	game.removeTickEvent("movimientoBala" + idBala)
+	game.removeTickEvent("animacionBala" + idBala.toString())
 		}
   }
 
@@ -177,11 +163,4 @@ class Proyectil inherits Elemento{
     jugador.recibirDanio(self.danio())
     self.borrarse()
   }
-
-  method esEnemigo() = false
-
-  method esTrinchera() = false
-
-  method esTorreta() = false
-
 }

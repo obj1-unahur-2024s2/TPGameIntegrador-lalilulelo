@@ -9,8 +9,8 @@ class Teletransportador inherits Elemento{
     method image() = img
 
     override method interactuarConJugador(jugador) {
-        game.clear()
+        jugador.position(game.origin().up(1))
+        nivel1.terminarNivel()
         nivel2.iniciar()
-        jugador.posicion(game.at(0,0))
     }
 }
