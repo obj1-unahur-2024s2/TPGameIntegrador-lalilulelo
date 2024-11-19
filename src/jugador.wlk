@@ -79,14 +79,9 @@ object jugador {
 
     method recibirDanio(danioRecibido) {
         salud = 0.max(salud - danioRecibido)
-        self.barraDeSalud()
         if(salud == 0) {
             self.morir()
         }
-    }
-
-    method barraDeSalud() {
-        
     }
 
     method morir() {
