@@ -32,7 +32,6 @@ class Ciclope inherits Elemento {
   }
 
   method despertar() {
-    
     self.seguirJugadorConstantemente(jugador.position())
   }
 

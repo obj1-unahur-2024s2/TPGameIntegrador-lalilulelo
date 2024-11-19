@@ -5,13 +5,13 @@ import src.monedas.*
 import src.obstaculos.*
 import src.puerta.*
 import src.jugador.*
+import src.menu.*
 
 program TowerDefense {
-  game.title("Grand Theft Cyclops")
+  game.title("Grand Teft Cyclops")
   game.width(15)
   game.height(15)
   game.cellSize(234)
-  game.boardGround("Stage1.png")
   game.start()
   nivel1.iniciar()
   jugador.controlesJugador()

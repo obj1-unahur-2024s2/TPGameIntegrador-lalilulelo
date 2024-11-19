@@ -12,8 +12,8 @@ class Nivel {
   const listaTorretas  
   const listaObstaculos
   const listaTrampas
-  const ciclope
-  const puerta
+  const property ciclope
+  const property puerta
   
   method iniciar() { 
     self.spawnearTorretas()
@@ -22,8 +22,9 @@ class Nivel {
     self.rodearMapa()
     self.spawnearTrampas()
     game.addVisual(ciclope)
-    game.addVisual(puerta)
     game.addVisual(jugador)
+    jugador.reiniciarPuntaje()
+    jugador.nivelActual(self)
     game.addVisual(barraDeVida)
   }
 
@@ -172,23 +173,29 @@ class Nivel {
  }
 }
 
-object nivel1 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puerta1, ciclope = ciclope1) {
-  const moneda1 = new Moneda(valor = 20, posicion = game.origin())
-  const moneda2 = new Moneda(valor = 20, posicion = game.origin().right(1))
-  const obstaculo1 = new Obstaculo(posicion = game.center().up(1))
-  const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
+object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9], listaTrampas = [], puerta = puertaNivel1, ciclope = ciclope1) {
+ 
+  const moneda1 = new Moneda(valor = 5, posicion = game.at(2,8))
+  const moneda2 = new Moneda(valor = 50, posicion = game.at(2,7))
+  const obstaculo1 = new Obstaculo(posicion = game.at(2,5))
+  const obstaculo2 = new Obstaculo(posicion = game.at(2,6))
+  const obstaculo3 = new Obstaculo(posicion = game.at(2,3))
+  const obstaculo4 = new Obstaculo(posicion = game.at(2,2))
+  const obstaculo5 = new Obstaculo(posicion = game.at(2,1))
+  const obstaculo6 = new Obstaculo(posicion = game.at(2,0))
+  const obstaculo7 = new Obstaculo(posicion = game.at(2,4))
+  const obstaculo8 = new Obstaculo(posicion = game.at(2,9))
+  const obstaculo9 = new Obstaculo(posicion = game.at(2,10))
   const trampa1 = new Trampa(posicion = game.center().left(1))
   const torreta1 = new Torreta(nroTorreta = 1, rangoAtaque = 5, direccion = 3, velocidadDeBala = 700, posicion = game.at(2, 10))
-  const puerta1 = new Teletransportador(posicion = game.at(5,2))
   const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
 }
 
-object nivel2 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puerta1, ciclope = ciclope1) {
-  const moneda1 = new Moneda(valor = 20, posicion = game.origin())
-  const moneda2 = new Moneda(valor = 20, posicion = game.origin().right(1))
+object nivel2 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puertaNivel2, ciclope = ciclope1) {
+  const moneda1 = new Moneda(valor = 50, posicion = game.origin())
+  const moneda2 = new Moneda(valor = 50, posicion = game.origin().right(1))
   const obstaculo1 = new Obstaculo(posicion = game.center().up(1))
   const obstaculo2 = new Obstaculo(posicion = game.center().down(1))
   const trampa1 = new Trampa(posicion = game.center().left(1))
-  const puerta1 = new Teletransportador(posicion = game.at(5,2))
   const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
 }

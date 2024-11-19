@@ -7,6 +7,7 @@ object jugador {
     var frame = 1
     const fotogramas = 2
     var puntos = 0
+    var property nivelActual = 0
 
 
     method initialize() {
@@ -14,7 +15,13 @@ object jugador {
     }
 
     method sumarPuntos(valor) {
-        puntos += valor
+        puntos = 100.min(puntos + valor)
+        if(puntos >= 50) {
+            nivelActual.ciclope().despertar()
+        }
+        if(puntos == 100) {
+            nivelActual.puerta().aparecer()
+        }
     }
 
     method puntos() = puntos
@@ -25,6 +32,10 @@ object jugador {
 
     method position(newPosition) {
         posicion = newPosition
+    }
+
+    method reiniciarPuntaje() {
+        puntos = 0
     }
 
     method position() = posicion
@@ -87,12 +98,6 @@ object jugador {
     method morir() {
         game.removeVisual(self)
     }
-
-    method despertarCiclopsDeNivel(nivel) {
-        if(jugador.puntos == 50) {
-            nivel.ciclope().despertar()
-        }
-    }
 }
 
 object barraDeVida {
@@ -101,4 +106,7 @@ object barraDeVida {
         method position() = posicion
         method image() = img + jugador.salud().toString() + ".png"
         method esColisionable() = false
+
+        method interactuarConJugador(jugador) {
+        }
     }
