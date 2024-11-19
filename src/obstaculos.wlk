@@ -8,10 +8,11 @@ class Obstaculo inherits ElementoColisionable {
 }
 
 class Trampa inherits Elemento {
-    const property danio
     const imagen = "pinchos.png"
 
     method image() = imagen
+
+    method danio() = 20
 
     override method interactuarConJugador(jugador) {
         jugador.recibirDanio(self.danio())
