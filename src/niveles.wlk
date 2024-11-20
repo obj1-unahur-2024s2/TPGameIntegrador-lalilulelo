@@ -1,4 +1,7 @@
 // src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
 import torretas.*
 import jugador.*
 import obstaculos.*
@@ -6,6 +9,7 @@ import wollok.game.*
 import src.monedas.*
 import src.puerta.*
 import cyclops.*
+import fondo.*
 
 class Nivel {
 
@@ -18,8 +22,9 @@ class Nivel {
   
   method iniciar() {
     game.allVisuals().forEach({e => game.removeVisual(e)})
+    const fondo = new Fondo(img = "stage.png")
     
-   
+    game.addVisual(fondo)
     self.spawnearTorretas()
     self.spawnearMonedas()
     self.spawnearObstaculos()
@@ -30,11 +35,10 @@ class Nivel {
     jugador.reiniciarPuntaje()
     jugador.nivelActual(self)
     game.addVisual(barraDeVida)
-    if(jugador.salud() == 0) {
-      jugador.salud(100)
-      jugador.posicion(game.origin().up(1))
-      jugador.puntos(0)
-    }
+    jugador.salud(100)
+    jugador.posicion(game.origin().up(1))
+    jugador.puntos(0)
+    jugador.controlesJugador()
   }
 
   method pasarASiguienteNivel() {
@@ -172,11 +176,21 @@ class Nivel {
         const paredInvisible56 = new Obstaculo(posicion = game.at(15,12))
         game.addVisual(paredInvisible56)
     }
-  
-  method fondo() {
-    return "Stage1.png"
-  }
+}
 
+object nivel0 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel1, ciclope = []) {
+  const fondoMenu = new Fondo(img = "menuInicio.png")
+  const menuAud = game.sound("menu.mp3")
+  override method iniciar() {
+    menuAud.shouldLoop(true)
+    menuAud.volume(0.20)
+    game.addVisual(fondoMenu)
+    keyboard.enter().onPressDo({
+      nivel1.iniciar()
+      menuAud.stop()
+    })
+  }
+  
 }
 
 object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [torreta1], listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9], listaTrampas = [], puerta = puertaNivel1, ciclope = ciclope1) {
