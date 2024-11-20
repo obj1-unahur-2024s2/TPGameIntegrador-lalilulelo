@@ -12,4 +12,6 @@ class Fondo {
   method esColisionable() = false
 
   method esJugador() = false
+
+  method interactuarConJugador(jugador) {}
 }
