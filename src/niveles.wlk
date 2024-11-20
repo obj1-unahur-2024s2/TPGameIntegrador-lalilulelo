@@ -16,7 +16,10 @@ class Nivel {
   const property ciclope
   const property puerta
   
-  method iniciar() { 
+  method iniciar() {
+    game.allVisuals().forEach({e => game.removeVisual(e)})
+    
+   
     self.spawnearTorretas()
     self.spawnearMonedas()
     self.spawnearObstaculos()
@@ -27,10 +30,15 @@ class Nivel {
     jugador.reiniciarPuntaje()
     jugador.nivelActual(self)
     game.addVisual(barraDeVida)
+    if(jugador.salud() == 0) {
+      jugador.salud(100)
+      jugador.posicion(game.origin().up(1))
+      jugador.puntos(0)
+    }
   }
 
   method pasarASiguienteNivel() {
-        nivel1.terminarNivel()
+
         nivel2.iniciar()
   }
   
@@ -169,9 +177,6 @@ class Nivel {
     return "Stage1.png"
   }
 
- method terminarNivel() {
-  game.allVisuals().forEach({e => game.removeVisual(e)})
- }
 }
 
 object nivel1 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [torreta1], listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9], listaTrampas = [], puerta = puertaNivel1, ciclope = ciclope1) {

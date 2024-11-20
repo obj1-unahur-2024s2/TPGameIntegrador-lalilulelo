@@ -13,7 +13,7 @@ program GrandTeftCyclops {
   game.width(15)
   game.height(15)
   game.cellSize(234)
+  fondo.menuInicio()
   game.start()
   game.addVisual(fondo)
-  jugador.controlesJugador()
 }

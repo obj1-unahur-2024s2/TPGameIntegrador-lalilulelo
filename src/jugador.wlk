@@ -1,11 +1,12 @@
 import wollok.game.*
+import src.fondo.*
 
 object jugador {
-    var posicion = game.origin().up(1)
-    var salud = 100
+    var property posicion = game.origin().up(1)
+    var property salud = 100
     var frame = 1
     const fotogramas = 2
-    var puntos = 0
+    var property puntos = 0
     var property nivelActual = 0
     const damageAud = "damage.mp3"
     const stepAud = "step.mp3"
@@ -105,6 +106,7 @@ object jugador {
     method morir() {
         game.removeVisual(self)
         game.sound(diedAud).play()
+        fondo.fondoMuerte()
     }
 }
 
