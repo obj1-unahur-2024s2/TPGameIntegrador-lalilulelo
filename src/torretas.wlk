@@ -1,4 +1,3 @@
-// src/torretas.wlk
 import wollok.game.*
 import elementos.*
 import obstaculos.*

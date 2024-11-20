@@ -4,7 +4,7 @@ import wollok.game.*
 import src.fondo.*
 
 object jugador {
-    var property posicion = game.origin().up(1)
+    var property posicion = game.origin().up(1).right(1)
     var property salud = 100
     var frame = 1
     const fotogramas = 2

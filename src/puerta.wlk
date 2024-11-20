@@ -18,7 +18,7 @@ class Teletransportador inherits Elemento{
 
 }
 
-object puertaNivel1 inherits Teletransportador(posicion = game.at(5,2)){
+object puertaNivel1 inherits Teletransportador(posicion = game.at(0,0)){
   override method interactuarConJugador(jugador) {
         super(jugador)
         nivel1.pasarASiguienteNivel()

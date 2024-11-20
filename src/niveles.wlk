@@ -27,10 +27,10 @@ class Nivel {
     self.rodearMapa()
     self.spawnearTrampas()
     game.addVisual(ciclope)
-    game.addVisual(jugador)
     jugador.reiniciarPuntaje()
     jugador.nivelActual(self)
     game.addVisual(barraDeVida)
+    game.addVisualCharacter(jugador)
   }
 
   method pasarASiguienteNivel() {
