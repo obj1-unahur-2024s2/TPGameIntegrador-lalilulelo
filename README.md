@@ -11,10 +11,10 @@
 
 ## Capturas
 
-![image](https://github.com/user-attachments/assets/7a04cd15-2029-46f7-ba27-e39a33defcf7)
-
 
 ![image](https://github.com/user-attachments/assets/8257b28b-2b5d-453d-8c09-f13cfa971402)
+
+![image](https://github.com/user-attachments/assets/7a04cd15-2029-46f7-ba27-e39a33defcf7)
 
 
 ## Reglas de Juego / Instrucciones
