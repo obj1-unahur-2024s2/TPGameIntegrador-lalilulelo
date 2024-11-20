@@ -1,4 +1,14 @@
 // src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
 import torretas.*
 import jugador.*
 import obstaculos.*
@@ -6,6 +16,7 @@ import wollok.game.*
 import src.monedas.*
 import src.puerta.*
 import cyclops.*
+import fondo.*
 
 class Nivel {
 
@@ -18,8 +29,9 @@ class Nivel {
   
   method iniciar() {
     game.allVisuals().forEach({e => game.removeVisual(e)})
+    const fondo = new Fondo(img = "stage.png")
     
-   
+    game.addVisual(fondo)
     self.spawnearTorretas()
     self.spawnearMonedas()
     self.spawnearObstaculos()
@@ -30,11 +42,6 @@ class Nivel {
     jugador.reiniciarPuntaje()
     jugador.nivelActual(self)
     game.addVisual(barraDeVida)
-    if(jugador.salud() == 0) {
-      jugador.salud(100)
-      jugador.posicion(game.origin().up(1))
-      jugador.puntos(0)
-    }
   }
 
   method pasarASiguienteNivel() {
@@ -172,16 +179,43 @@ class Nivel {
         const paredInvisible56 = new Obstaculo(posicion = game.at(15,12))
         game.addVisual(paredInvisible56)
     }
-  
-  method fondo() {
-    return "Stage1.png"
-  }
 
+    method reiniciar() {
+      keyboard.r().onPressDo({
+        game.clear()
+        nivel1.iniciar()
+      })
+    }
+}
+
+object nivel0 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel1, ciclope = []) {
+  const fondoMenu = new Fondo(img = "menuInicio.png")
+  const menuAud = game.sound("menu.mp3")
+  override method iniciar() {
+    menuAud.play()
+    menuAud.shouldLoop(true)
+    menuAud.volume(0.20)
+    game.addVisual(fondoMenu)
+    keyboard.enter().onPressDo({
+      menuAud.stop()
+      nivel1.iniciar()
+      const levelAud = game.sound("level.mp3")
+      levelAud.shouldLoop(true)
+      levelAud.volume(0.20)
+      levelAud.play()
+      jugador.salud(100)
+      jugador.posicion(game.origin().up(1))
+      jugador.puntos(0)
+      jugador.controlesJugador()
+    })
+  }
+  
 }
 
 object nivel1 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9,obstaculo10, obstaculo11, obstaculo16, obstaculo17,obstaculo18, obstaculo19, obstaculo20, obstaculo24, obstaculo25, obstaculo26, obstaculo27, obstaculo28, obstaculo29, obstaculo30, obstaculo31, obstaculo32, obstaculo33, obstaculo34, obstaculo35, obstaculo36, obstaculo37,obstaculo38, obstaculo39, obstaculo40, obstaculo41, obstaculo42, obstaculo43, obstaculo44, obstaculo45, obstaculo46, obstaculo47 ],
                listaTrampas = [trampa1,trampa2,trampa3,trampa4,trampa5,trampa6,trampa7,trampa8,trampa9,trampa10,trampa11], puerta = puertaNivel1, ciclope = ciclope1) {
  
+<<<<<<< HEAD
   const levelAud = game.sound("level.mp3")
   const obstaculo1 = new Obstaculo(posicion = game.at(2,0))  
   const obstaculo2 = new Obstaculo(posicion = game.at(2,1))
@@ -243,15 +277,13 @@ object nivel1 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstacu
   const trampa11 = new Trampa(posicion = game.at(0,12))
   
 
+=======
+  
+>>>>>>> 94b6620d863f240ad582387426ef9c26ded52837
   const moneda1 = new Moneda(valor = 50, posicion = game.at(2,8))
   const moneda2 = new Moneda(valor = 50, posicion = game.at(2,7))
   const torreta1 = new Torreta(nroTorreta = 1, rangoAtaque = 5, direccion = 3, velocidadDeBala = 700, posicion = game.at(1, 10))
   const ciclope1 = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10))
-  method initialize() {
-    levelAud.shouldLoop(true)
-    levelAud.volume(0.20)
-    levelAud.play()
-  }
 }
 
 object nivel2 inherits Nivel(listaMonedas = [moneda1, moneda2], listaTorretas = [], listaObstaculos = [obstaculo1, obstaculo2], listaTrampas = [trampa1], puerta = puertaNivel2, ciclope = ciclope1) {

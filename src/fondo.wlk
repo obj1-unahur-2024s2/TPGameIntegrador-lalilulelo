@@ -2,17 +2,16 @@ import wollok.game.*
 import src.elementos.*
 import src.niveles.*
 
-object fondo inherits Elemento(posicion = game.at(0,0)){
-  var imagen = "menuInicio.png"
- 
+class Fondo {
+  const img
 
-  method menuInicio() {
-    keyboard.enter().onPressDo({ if(game.hasVisual(self)) {game.removeVisual(self) nivel1.iniciar() game.boardGround("stage1.png")} })
-  }
+  method image() = img
 
-  method fondoMuerte() {
-    imagen = "died.png"
-    game.addVisual(self)
-  }
-    method image() = imagen 
+  method position() = game.at(0,0)
+
+  method esColisionable() = false
+
+  method esJugador() = false
+
+  method interactuarConJugador(jugador) {}
 }

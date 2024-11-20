@@ -1,3 +1,5 @@
+// src/jugador.wlk
+// src/jugador.wlk
 import wollok.game.*
 import src.fondo.*
 
@@ -106,7 +108,6 @@ object jugador {
     method morir() {
         game.removeVisual(self)
         game.sound(diedAud).play()
-        fondo.fondoMuerte()
     }
 }
 
