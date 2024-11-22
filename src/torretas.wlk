@@ -14,13 +14,13 @@ object gestorDeIds {
 
 class Torreta inherits ElementoColisionable {
   var property idTorreta = gestorDeIds.nuevoId()
-  const property nroTorreta
+
   const property rangoAtaque
   var copiaRangoAtaque = rangoAtaque
   const property velocidadDeBala
   const direccion
   const property areaDeAtaque = [posicion]
-  var img = ((("torret" + nroTorreta.toString()) + "_stance_") + direccion.toString()) + ".png"
+  var img = ((("torret1") + "_stance_") + direccion.toString()) + ".png"
   var enCooldown = false
   const tiempoCooldown = 1000 // Tiempo de cooldown en milisegundos.
 
@@ -82,8 +82,8 @@ class Torreta inherits ElementoColisionable {
 
 
   method atacar() {
-      if (!enCooldown) { // Solo dispara si no está en cooldown.
-            img = "torret" + nroTorreta.toString() + "_frame2_" + direccion.toString() + ".png"
+      if (!enCooldown) {
+            img = "torret1" + "_frame2_" + direccion.toString() + ".png"
             game.onTick(500, "animacionTorreta" + idTorreta, { self.animacionAtaque() })
             self.dispararProyectil()
             self.activarCooldown()
@@ -91,7 +91,7 @@ class Torreta inherits ElementoColisionable {
     }
 
   method animacionAtaque() {
-    img = "torret" + nroTorreta.toString() + "_frame1_" + direccion.toString() + ".png"
+    img = "torret1"+ "_frame1_" + direccion.toString() + ".png"
     game.removeTickEvent("animacionTorreta" + idTorreta)
   }
 
@@ -102,7 +102,7 @@ class Torreta inherits ElementoColisionable {
 
   method finalizarCooldown() {
         enCooldown = false
-        game.removeTickEvent("cooldownTorreta" + idTorreta) // Limpieza del evento.
+        game.removeTickEvent("cooldownTorreta" + idTorreta) 
     }
     
   method dispararProyectil() {
@@ -116,11 +116,10 @@ class Torreta inherits ElementoColisionable {
         )
 
         const shootAud = "shoot.mp3"
-      
     game.addVisual(bala)
     game.sound(shootAud).play()
     controladorDeProyectiles.agregarProyectil(bala)
-    bala.moverBala() // Inicia el movimiento.
+    bala.moverBala()
   }
 
   method esTorreta() = true
@@ -151,11 +150,6 @@ class Proyectil inherits Elemento{
   var movimientosPosibles 
   
 
-  method initialize(){
-    //"movimientoBala"+ idBala.toString()
-		game.onTick(velocidad,"coin,png",{self.moverBala()})
-	}
-
   
 
   method moverBala() {
@@ -163,7 +157,7 @@ class Proyectil inherits Elemento{
         self.borrarse()
     } else {
         posicion = self.siguientePosicion(self.direccion())
-        movimientosPosibles -= 1 // solo puede disparar denuevo si la bala ya recorrio la mitad del camino
+        movimientosPosibles -= 1
     }
 }
 

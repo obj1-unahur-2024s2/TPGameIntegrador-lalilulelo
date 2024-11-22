@@ -36,7 +36,7 @@ class Nivel {
     jugador.reiniciarPuntaje()
     jugador.nivelActual(self)
     game.addVisual(barraDeVida)
-    game.addVisualCharacter(jugador)
+    game.addVisual(jugador)
   }
 
   method pasarASiguienteNivel() {
@@ -72,12 +72,11 @@ class Nivel {
     }
   }
 
-  method reiniciar() {
-    keyboard.r().onPressDo({
-      game.clear()
-      nivel1.iniciar()
-    })
-  }
+    method reiniciar() {
+      keyboard.r().onPressDo({
+           nivel1.iniciar()
+      })
+    }
 }
 
 object nivel0 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel1, ciclope = []) {
@@ -98,14 +97,13 @@ object nivel0 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstacu
       jugador.salud(100)
       jugador.posicion(game.origin().up(1))
       jugador.puntos(0)
-      jugador.controlesJugador()
     })
   }
   
 }
 
 object nivel1 inherits Nivel(listaMonedas = [moneda1,moneda2,moneda3,moneda4,moneda5,moneda6], 
-listaTorretas = [torreta1,torreta2,torreta3,torreta4], 
+listaTorretas = [torreta1], 
 listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9,obstaculo10, obstaculo11, 
 obstaculo16, obstaculo17,obstaculo18, obstaculo19, obstaculo20, obstaculo24, obstaculo25, obstaculo26, obstaculo27, obstaculo28, obstaculo30, obstaculo31, 
 obstaculo32, obstaculo33, obstaculo333,obstaculo334, obstaculo34, obstaculo35, obstaculo36, obstaculo37,obstaculo38, obstaculo39, obstaculo40, obstaculo41, 
@@ -113,6 +111,11 @@ obstaculo42, obstaculo43, obstaculo44, obstaculo45, obstaculo46, obstaculo47 ],
 listaTrampas = [trampa1,trampa2,trampa3,trampa4,trampa5,trampa6,trampa7,trampa8,trampa9,trampa10,trampa11,trampa12], 
 puerta = puertaNivel2, 
 ciclope = ciclope1) {
+
+  override method iniciar() {
+    super()
+    jugador.controlesJugador()
+  }
  
   const levelAud = game.sound("level.mp3")
   const obstaculo1 = new Obstaculo(posicion = game.at(2,0))  
@@ -178,17 +181,23 @@ ciclope = ciclope1) {
   const trampa12 = new Trampa(posicion = game.at(4,3))
 
   
-  const moneda1 = new Moneda(valor = 17, posicion = game.at(7,1))
-  const moneda2 = new Moneda(valor = 17, posicion = game.at(8,0))
-  const moneda3 = new Moneda(valor = 17, posicion = game.at(8,12))
-  const moneda4 = new Moneda(valor = 17, posicion = game.at(7,1))
-  const moneda5 = new Moneda(valor = 17, posicion = game.at(14,8))
-  const moneda6 = new Moneda(valor = 17, posicion = game.at(13,8))
+  const moneda1 = new Moneda(valor = 10, posicion = game.at(7,1))
+  const moneda2 = new Moneda(valor = 10, posicion = game.at(8,0))
+  const moneda3 = new Moneda(valor = 10, posicion = game.at(8,12))
+  const moneda4 = new Moneda(valor = 10, posicion = game.at(7,1))
+  const moneda5 = new Moneda(valor = 10, posicion = game.at(14,8))
+  const moneda6 = new Moneda(valor = 50, posicion = game.at(13,8))
   
-  const torreta1 = new Torreta(nroTorreta = 1, rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
-  const torreta2 = new Torreta(nroTorreta = 1, rangoAtaque = 10, direccion = 4, velocidadDeBala = 33, posicion = game.at(13, 0))
-  const torreta3 = new Torreta(nroTorreta = 1, rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(14, 12))
-  const torreta4 = new Torreta(nroTorreta = 1, rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(13, 12))
+  const torreta1 = new Torreta(rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
+  const torreta2 = new Torreta(rangoAtaque = 10, direccion = 4, velocidadDeBala = 33, posicion = game.at(13, 0))
+  const torreta3 = new Torreta(rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(14, 12))
+  const torreta4 = new Torreta(rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(13, 12))
+  const torreta5 = new Torreta(rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
  
   const ciclope1 = new Ciclope(velocidadMovimiento = 600, posicion = game.at(10, 10))
+}
+
+
+object nivel2 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel2, ciclope = []) {
+
 }

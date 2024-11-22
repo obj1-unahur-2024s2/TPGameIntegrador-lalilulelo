@@ -21,7 +21,7 @@ object jugador {
 
     method sumarPuntos(valor) {
         puntos = 100.min(puntos + valor)
-        if(puntos == 50) {
+        if(puntos > 50 && !nivelActual.ciclope().estaDespierto()) {
             nivelActual.ciclope().despertar()
         }
         if(puntos == 100) {

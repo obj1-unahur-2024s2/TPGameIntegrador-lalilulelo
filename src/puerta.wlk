@@ -15,7 +15,6 @@ class Teletransportador inherits Elemento{
     method aparecer() {
         game.addVisual(self)
     }
-
 }
 
 object puertaNivel1 inherits Teletransportador(posicion = game.at(0,0)){
@@ -29,7 +28,6 @@ object puertaNivel1 inherits Teletransportador(posicion = game.at(0,0)){
 
 object puertaNivel2 inherits Teletransportador(posicion = game.at(5,2)){
   override method interactuarConJugador(jugador) {
-  
     }
 
 }
