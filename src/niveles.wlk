@@ -289,6 +289,7 @@ ciclope = ciclope1) {
   const torreta2 = new Torreta(rangoAtaque = 10, direccion = 4, velocidadDeBala = 33, posicion = game.at(13, 0))
   const torreta3 = new Torreta(rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(14, 12))
   const torreta4 = new Torreta(rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(13, 12))
+  const torreta1 = new Torreta(nroTorreta = 1, rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
  
   const ciclope1 = new Ciclope(velocidadMovimiento = 600, posicion = game.at(10, 10))
 }
