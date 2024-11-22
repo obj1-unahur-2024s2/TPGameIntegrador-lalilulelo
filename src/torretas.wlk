@@ -14,7 +14,6 @@ object gestorDeIds {
 
 class Torreta inherits ElementoColisionable {
   var property idTorreta = gestorDeIds.nuevoId()
-
   const property rangoAtaque
   var copiaRangoAtaque = rangoAtaque
   const property velocidadDeBala

@@ -22,8 +22,8 @@ class Nivel {
   
   method iniciar() {
     game.allVisuals().forEach({e => game.removeVisual(e)})
-    var obstaculos = [[0,-1], [1,-1], [2,-1], [3,-1], [4,-1], [5,-1], [6,-1], [7,-1], [8,-1], [9,-1], [10,-1], [11,-1], [12,-1], [13,-1], [14,-1], [-1,0], [-1,1], [-1,2], [-1,3], [-1,4], [-1,5], [-1,6], [-1,7], [-1,8], [-1,9], [-1,10], [-1,11], [-1,12], [15,0], [15,1], [15,2], [15,3], [15,4], [15,5], [15,6], [15,7], [15,8], [15,9], [15,10], [15,11], [15,12]]
-    var invisibles = [[0,13], [1,13], [2,13], [3,13], [4,13], [5,13], [6,13], [7,13], [8,13], [9,13], [10,13], [11,13], [12,13], [13,13], [14,13]]
+    const obstaculos = [[0,-1], [1,-1], [2,-1], [3,-1], [4,-1], [5,-1], [6,-1], [7,-1], [8,-1], [9,-1], [10,-1], [11,-1], [12,-1], [13,-1], [14,-1], [-1,0], [-1,1], [-1,2], [-1,3], [-1,4], [-1,5], [-1,6], [-1,7], [-1,8], [-1,9], [-1,10], [-1,11], [-1,12], [15,0], [15,1], [15,2], [15,3], [15,4], [15,5], [15,6], [15,7], [15,8], [15,9], [15,10], [15,11], [15,12]]
+    const invisibles = [[0,13], [1,13], [2,13], [3,13], [4,13], [5,13], [6,13], [7,13], [8,13], [9,13], [10,13], [11,13], [12,13], [13,13], [14,13]]
     const fondo = new Fondo(img = "stage.png")
     
     game.addVisual(fondo)
@@ -62,11 +62,14 @@ class Nivel {
 
   method rodearMapa(obstaculos, invisibles) {
     if(!obstaculos.isEmpty()){
-      const obstaculo = new Obstaculo(posicion = game.at(obstaculos.first().first(), obstaculos.last().last()))
+      const obstaculo = new Obstaculo(posicion = game.at(obstaculos.first().first(), obstaculos.first().last()))
+      game.addVisual(obstaculo)
       obstaculos.remove(obstaculos.first())
       self.rodearMapa(obstaculos, invisibles)
-    } else if (!invisibles.isEmpty()) {
-      const invisible = new ParedInvisible(posicion = game.at(invisibles.first().first(), invisibles.last().last()))
+    }
+    if (!invisibles.isEmpty()) {
+      const invisible = new ParedInvisible(posicion = game.at(invisibles.first().first(), invisibles.first().last()))
+      game.addVisual(invisible)
       invisibles.remove(invisibles.first())
       self.rodearMapa(obstaculos, invisibles)
     }
@@ -189,10 +192,6 @@ ciclope = ciclope1) {
   const moneda6 = new Moneda(valor = 50, posicion = game.at(13,8))
   
   const torreta1 = new Torreta(rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
-  const torreta2 = new Torreta(rangoAtaque = 10, direccion = 4, velocidadDeBala = 33, posicion = game.at(13, 0))
-  const torreta3 = new Torreta(rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(14, 12))
-  const torreta4 = new Torreta(rangoAtaque = 10, direccion = 3, velocidadDeBala = 33, posicion = game.at(13, 12))
-  const torreta5 = new Torreta(rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
  
   const ciclope1 = new Ciclope(velocidadMovimiento = 600, posicion = game.at(10, 10))
 }
