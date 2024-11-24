@@ -1,33 +1,25 @@
 import elementos.*
 import wollok.game.*
-import jugador.*
+import src.jugador.*
 import src.niveles.*
 
-class Teletransportador inherits Elemento{
+class Teletransportador {
+    const posicion
     const img = "portal.png"
 
-    method image() = img
+    method position() = posicion
 
-    override method interactuarConJugador(jugador) {
-        jugador.position(game.origin().up(1))
-    }
+    method image() = img
 
     method aparecer() {
         game.addVisual(self)
     }
-}
 
-object puertaNivel1 inherits Teletransportador(posicion = game.at(0,0)){
-  override method interactuarConJugador(jugador) {
-        super(jugador)
-        nivel1.pasarASiguienteNivel()
+    method interactuarConJugador(jugador) {
+        
     }
 
+    method esColisionable() = false
 
-}
-
-object puertaNivel2 inherits Teletransportador(posicion = game.at(5,2)){
-  override method interactuarConJugador(jugador) {
-    }
-
+    method esJugador() = false
 }

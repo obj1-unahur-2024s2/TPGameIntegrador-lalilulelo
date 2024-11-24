@@ -14,9 +14,9 @@ object gestorDeIds {
 
 class Torreta inherits ElementoColisionable {
   var property idTorreta = gestorDeIds.nuevoId()
-  const property rangoAtaque
+  const property rangoAtaque = 5
   var copiaRangoAtaque = rangoAtaque
-  const property velocidadDeBala
+  const property velocidadDeBala = 1000
   const direccion
   const property areaDeAtaque = [posicion]
   var img = ((("torret1") + "_stance_") + direccion.toString()) + ".png"

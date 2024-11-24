@@ -1,11 +1,10 @@
-import cyclops.*
+import src.cyclops.*
 import wollok.game.*
-import niveles.*
+import src.niveles.*
 import src.monedas.*
 import src.obstaculos.*
 import src.puerta.*
 import src.jugador.*
-import src.menu.*
 import src.fondo.*
 
 program GrandTeftCyclops {
@@ -13,6 +12,6 @@ program GrandTeftCyclops {
   game.width(15)
   game.height(15)
   game.cellSize(234) 
-  nivel0.iniciar()
+  menu.abrir()
   game.start()
 }
