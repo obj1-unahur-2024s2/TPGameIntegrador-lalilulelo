@@ -22,4 +22,16 @@ class Teletransportador {
     method esColisionable() = false
 
     method esJugador() = false
+
+    method desaparecer() {
+        game.removeVisual(self)
+    }
+}
+
+object puertaNivel1 inherits Teletransportador(posicion = game.at(1,5)){
+  override method interactuarConJugador(jugador) {
+        nivel1.ost().stop()
+        game.clear()
+        nivel2.iniciar()
+    }
 }

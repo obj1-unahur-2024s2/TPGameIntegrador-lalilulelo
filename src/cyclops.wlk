@@ -39,6 +39,10 @@ class Ciclope inherits Elemento {
     game.sound(cyclopsAwake).play()
   }
 
+method desaparecer() {
+    game.removeVisual(self)
+}
+
   method estaDespierto() = estaDespierto
 
   override method interactuarConJugador(jugador) {

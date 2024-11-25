@@ -1,5 +1,3 @@
-// src/jugador.wlk
-// src/jugador.wlk
 import wollok.game.*
 import src.fondo.*
 
@@ -21,7 +19,7 @@ object jugador {
 
     method sumarPuntos(valor) {
         puntos = 100.min(puntos + valor)
-        if(puntos > 50 && !nivelActual.ciclope().estaDespierto()) {
+        if(puntos >= 50 && !nivelActual.ciclope().estaDespierto()) {
             nivelActual.ciclope().despertar()
         }
         if(puntos == 100) {
