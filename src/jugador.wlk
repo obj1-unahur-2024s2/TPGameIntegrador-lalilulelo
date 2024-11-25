@@ -1,3 +1,4 @@
+// src/jugador.wlk
 import wollok.game.*
 import src.fondo.*
 
@@ -105,7 +106,8 @@ object jugador {
         game.sound(diedAud).play()
         const muerte = new Fondo(img = "youDied.png")
         game.addVisual(muerte)
-        self.nivelActual().ost().stop()
+        self.nivelActual().ost().volume(0)
+        self.nivelActual().quitarAudio()
     }
 }
 
