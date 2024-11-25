@@ -32,12 +32,13 @@ class Nivel {
   method botones() {
     self.mutear()
     self.reiniciar()
-    
   }
   
   method spawnearElementos(bordesMapa, fondoMapa){
+    const bordesCopy = []
+    bordesCopy.addAll(bordes)
     game.addVisual(fondo)
-    self.rodearMapa(bordes)
+    self.rodearMapa(bordesCopy)
     self.spawnearCiclope()
     self.spawnearPuerta()
   }
@@ -60,10 +61,18 @@ class Nivel {
   }
 
   method generarEstructuras(obstaculos, trampas, monedas, torretas) {
-    self.generarObstaculos(obstaculos)
-    self.generarTrampas(trampas)
-    self.generarMonedas(monedas)
-    self.generarTorretas(torretas)
+    const obstCopy = []
+    const trampCopy = []
+    const monCopy = []
+    const torCopy = []
+    obstCopy.addAll(obstaculos)
+    trampCopy.addAll(trampas)
+    monCopy.addAll(monedas)
+    torCopy.addAll(torretas)
+    self.generarObstaculos(obstCopy)
+    self.generarTrampas(trampCopy)
+    self.generarMonedas(monCopy)
+    self.generarTorretas(torCopy)
   }
 
   method generarObstaculos(obstaculos) {
@@ -126,6 +135,7 @@ class Nivel {
     game.addVisual(jugador)
     game.addVisual(barraDeVida)
     jugador.controlesJugador()
+    jugador.colision()
   }
 
   method reiniciar() {

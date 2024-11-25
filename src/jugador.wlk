@@ -13,7 +13,7 @@ object jugador {
     const diedAud = "died.mp3"
 
 
-    method initialize() {
+    method colision() {
         game.onCollideDo(self, {elemento => elemento.interactuarConJugador(self)})
     }
 
