@@ -12,7 +12,7 @@ class Nivel {
   const property listaTrampas
   const property listaMonedas
   const property listaTorretas
-  const property ciclope
+  var property ciclope
   const property puerta
   const property ost = game.sound("level.mp3")
   const bordes = [[0,-1], [1,-1], [2,-1], [3,-1], [4,-1], [5,-1], [6,-1], [7,-1], [8,-1], [9,-1], [10,-1], [11,-1], [12,-1], [13,-1], [14,-1], [-1,0], [-1,1], [-1,2], [-1,3], [-1,4], [-1,5], [-1,6], [-1,7], [-1,8], [-1,9], [-1,10], [-1,11], [-1,12], [0,13], [1,13], [2,13], [3,13], [4,13], [5,13], [6,13], [7,13], [8,13], [9,13], [10,13], [11,13], [12,13], [13,13], [14,13],[15,0], [15,1], [15,2], [15,3], [15,4], [15,5], [15,6], [15,7], [15,8], [15,9], [15,10], [15,11], [15,12]]
@@ -142,6 +142,8 @@ class Nivel {
     keyboard.r().onPressDo({
       self.ost().stop()
       game.clear()
+      nivel1.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
+      nivel2.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
       nivel1.iniciar()
     })
   }
