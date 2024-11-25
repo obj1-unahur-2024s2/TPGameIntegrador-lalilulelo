@@ -6,7 +6,7 @@ import wollok.game.*
 
 class Ciclope inherits Elemento {
   const property velocidadMovimiento
-  const img = "cyclops1.png"
+  const img = "cyclops.png"
   const danio = 100
   const cyclopsAwake = "cyclops.mp3"
   var estaDespierto = false

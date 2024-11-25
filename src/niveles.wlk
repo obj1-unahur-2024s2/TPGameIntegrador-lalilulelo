@@ -140,7 +140,7 @@ class Nivel {
 }
 object menu{
   method abrir() {
-    const fondoMenu = new Fondo(img = "menuInicio.png")
+    const fondoMenu = new Fondo(img = "menuImage.png")
     const menuAud = game.sound("menu.mp3")
     menuAud.play()
     menuAud.shouldLoop(true)
