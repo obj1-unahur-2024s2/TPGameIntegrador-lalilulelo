@@ -103,16 +103,18 @@ object jugador {
     method morir() {
         game.removeVisual(self)
         game.sound(diedAud).play()
+        const muerte = new Fondo(img = "youDied.png")
+        game.addVisual(muerte)
+        self.nivelActual().ost().stop()
     }
 }
 
 object barraDeVida {
-        const posicion = game.at(0, 12)
-        const img = "barraDeVida"
-        method position() = posicion
-        method image() = img + jugador.salud().toString() + ".png"
-        method esColisionable() = false
-
-        method interactuarConJugador(jugador) {
-        }
+    const posicion = game.at(0, 12)
+    const img = "barraDeVida"
+    method position() = posicion
+    method image() = img + jugador.salud().toString() + ".png"
+    method esColisionable() = false
+    method interactuarConJugador(jugador) {
     }
+}
