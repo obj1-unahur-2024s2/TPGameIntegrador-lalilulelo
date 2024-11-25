@@ -142,8 +142,6 @@ class Nivel {
     keyboard.r().onPressDo({
       self.ost().stop()
       game.clear()
-      puerta.desaparecer()
-      ciclope.desaparecer()
       nivel1.iniciar()
     })
   }

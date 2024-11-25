@@ -6,9 +6,9 @@ import wollok.game.*
 
 class Ciclope inherits Elemento {
   const property velocidadMovimiento
-  const img = "cyclops.png"
   const danio = 100
   const cyclopsAwake = "cyclops.mp3"
+  var img = "cyclopszzz.png"
   var estaDespierto = false
   
   method jugadorX() = jugador.position().x()
@@ -37,11 +37,8 @@ class Ciclope inherits Elemento {
     self.seguirJugadorConstantemente(jugador.position())
     estaDespierto = true
     game.sound(cyclopsAwake).play()
+    img = "cyclops.png"
   }
-
-method desaparecer() {
-    game.removeVisual(self)
-}
 
   method estaDespierto() = estaDespierto
 

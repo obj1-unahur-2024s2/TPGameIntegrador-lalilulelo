@@ -28,7 +28,7 @@ class Teletransportador {
     }
 }
 
-object puertaNivel1 inherits Teletransportador(posicion = game.at(0,1)){
+object puertaNivel1 inherits Teletransportador(posicion = game.at(1,0)){
   override method interactuarConJugador(jugador) {
         nivel1.ost().stop()
         game.clear()
