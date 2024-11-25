@@ -12,6 +12,6 @@ program GrandTeftCyclops {
   game.width(15)
   game.height(15)
   game.cellSize(234)
-  menu.abrir()
+  nivel2.iniciar()
   game.start()
 }
