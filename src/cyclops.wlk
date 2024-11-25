@@ -9,7 +9,6 @@ class Ciclope inherits Elemento {
   const danio = 100
   const cyclopsAwake = "cyclops.mp3"
   var img = "cyclopszzz.png"
-  var estaDespierto = false
   
   method jugadorX() = jugador.position().x()
   method jugadorY() = jugador.position().y()
@@ -35,12 +34,9 @@ class Ciclope inherits Elemento {
 
   method despertar() {
     self.seguirJugadorConstantemente(jugador.position())
-    estaDespierto = true
     game.sound(cyclopsAwake).play()
     img = "cyclops.png"
   }
-
-  method estaDespierto() = estaDespierto
 
   override method interactuarConJugador(jugador) {
     jugador.recibirDanio(self.danio())
