@@ -40,15 +40,10 @@ class Nivel {
     game.addVisual(fondo)
     self.rodearMapa(bordesCopy)
     self.spawnearCiclope()
-    self.spawnearPuerta()
   }
 
   method spawnearCiclope() {
     game.addVisual(self.ciclope())
-  }
-
-  method spawnearPuerta() {
-    game.addVisual(self.puerta())
   }
 
   method rodearMapa(invisibles) {

@@ -22,6 +22,7 @@ object jugador {
         puntos = 100.min(puntos + valor)
         if(puntos >= 50) {
             nivelActual.ciclope().despertar()
+            nivelActual.puerta().aparecer()
         }   
     }
 
