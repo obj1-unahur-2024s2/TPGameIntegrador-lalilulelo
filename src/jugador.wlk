@@ -105,7 +105,7 @@ object jugador {
     method morir() {
         game.removeVisual(self)
         game.sound(diedAud).play()
-        const muerte = new Fondo(img = "youDied.png")
+        const muerte = new Fondo(img = "youDiedgg.png")
         game.addVisual(muerte)
         self.nivelActual().ost().volume(0)
         self.nivelActual().quitarAudio()
