@@ -1,7 +1,3 @@
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
 import src.torretas.*
 import src.jugador.*
 import src.obstaculos.*
@@ -147,7 +143,7 @@ class Nivel {
       self.ost().stop()
       game.clear()
       nivel1.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
-      nivel2.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
+      nivel2.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(14, 0)))
       self.iniciar()
     })
   }
