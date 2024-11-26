@@ -1,3 +1,7 @@
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
+// src/niveles.wlk
 import src.torretas.*
 import src.jugador.*
 import src.obstaculos.*
@@ -39,7 +43,6 @@ class Nivel {
     bordesCopy.addAll(bordes)
     game.addVisual(fondo)
     self.rodearMapa(bordesCopy)
-    self.spawnearCiclope()
   }
 
   method spawnearCiclope() {
@@ -68,6 +71,7 @@ class Nivel {
     self.generarTrampas(trampCopy)
     self.generarMonedas(monCopy)
     self.generarTorretas(torCopy)
+    self.spawnearCiclope()
   }
 
   method generarObstaculos(obstaculos) {
@@ -167,8 +171,8 @@ object menu{
 object nivel1 inherits Nivel(
   listaObstaculos = [[2,0], [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8], [2,9], [2,10], [5,10], [6,10], [7,10], [8,10], [9,10], [5,11], [6,11], [7,11], [8,11], [9,11], [5,3], [6,3], [7,3], [8,3], [9,3], [5,2], [6,2], [7,2], [8,2], [9,2], [12,3], [12,4], [12,5], [12,6], [12,7], [12,8], [12,9], [12,10], [12,11], [12,12]],
   listaTrampas = [[0,2], [0,10], [1,4], [1,5], [1,6], [1,7], [1,8], [5,12], [6,12], [7,12], [3,3], [4,3]],
-  listaMonedas = [[7,1], [8,0], [8,12], [7,1], [14,8]],
-  listaTorretas = [[3,1,2], [3,0,2]],
+  listaMonedas = [[4,1], [3,1], [8,12], [13,11], [14,11]],
+  listaTorretas = [[3,2,3], [4,2,3], [13,12,3], [14,12,3]],
   ciclope = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)),
   puerta = puertaNivel1) {}
 
