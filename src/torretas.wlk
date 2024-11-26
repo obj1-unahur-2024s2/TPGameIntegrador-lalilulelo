@@ -16,7 +16,10 @@ object gestorDeTorretas {
 
     method agregarTorreta(torreta) {
         torretas.add(torreta)
-        if (torretas.size() == 1) { 
+    }
+
+    method activarTorretas(){
+      if (torretas.size() <= 1) { 
             game.onTick(550, "actualizarTorretas", { self.actualizarTorretas() })
         }
     }
@@ -26,6 +29,10 @@ object gestorDeTorretas {
         if (torretas.isEmpty()) { 
             game.removeTickEvent("actualizarTorretas")
         }
+    }
+
+    method eliminarTodasLasTorretas(){
+      torretas.forEach({torreta => self.eliminarTorreta(torreta)})
     }
 
     method actualizarTorretas() {
@@ -41,7 +48,7 @@ class Torreta inherits ElementoColisionable {
   const direccion
   var img = ((("torret1") + "_stance_") + direccion.toString()) + ".png"
   var enCooldown = false
-  const tiempoCooldown = 2000 
+  const tiempoCooldown = 5000
 
   method image() = img
 
@@ -154,12 +161,11 @@ object controladorDeProyectiles {
 
     method agregarProyectil(proyectil) {
         proyectiles.add(proyectil)
-        if (proyectiles.size() == 1) { 
-            game.onTick(1, "moverProyectiles", { 
-                self.moverProyectiles()
-            })
-        }
     }
+
+    method activarProyectiles(){
+        game.onTick(50, "moverProyectiles", {self.moverProyectiles()})
+        }
 
     method eliminarProyectil(proyectil) {
         proyectiles.remove(proyectil)
