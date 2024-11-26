@@ -1,10 +1,3 @@
-// src/puerta.wlk
-// src/puerta.wlk
-// src/puerta.wlk
-// src/puerta.wlk
-// src/puerta.wlk
-// src/puerta.wlk
-// src/puerta.wlk
 import elementos.*
 import wollok.game.*
 import src.jugador.*
@@ -45,9 +38,9 @@ object puertaNivel1 inherits Teletransportador(posicion = game.at(1,0)){
 }
 
 object puertaNivel2 inherits Teletransportador(posicion = game.at(0,0)){
-    const winAud = game.sound("youWin")
+    const winAud = game.sound("youWin.mp3")
   override method interactuarConJugador(jugador) {
-        nivel1.ost().stop()
+        jugador.nivelActual().ost().stop()
         game.clear()
         const victory = new Fondo(img = "youWin.png")
         game.addVisual(victory)
