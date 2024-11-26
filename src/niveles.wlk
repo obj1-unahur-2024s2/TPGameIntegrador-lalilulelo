@@ -148,7 +148,7 @@ class Nivel {
       game.clear()
       nivel1.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
       nivel2.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
-      nivel1.iniciar()
+      self.iniciar()
     })
   }
 }
@@ -182,4 +182,4 @@ object nivel2 inherits Nivel(
   listaMonedas = [[2,0], [1,8], [6,3], [12,9], [14,2]],
   listaTorretas = [[14,12,3]],
   ciclope = new Ciclope(velocidadMovimiento = 800, posicion = game.at(14, 0)),
-  puerta = new Teletransportador(posicion = game.at(0,0))) {}
+  puerta = puertaNivel2) {}
