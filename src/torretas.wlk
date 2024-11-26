@@ -12,82 +12,53 @@ object gestorDeIds {
 }
 
 
+object gestorDeTorretas {
+    const torretas = [] 
+
+    method agregarTorreta(torreta) {
+        torretas.add(torreta)
+        if (torretas.size() == 1) { 
+            game.onTick(550, "actualizarTorretas", { self.actualizarTorretas() })
+        }
+    }
+
+    method eliminarTorreta(torreta) {
+        torretas.remove(torreta)
+        if (torretas.isEmpty()) { 
+            game.removeTickEvent("actualizarTorretas")
+        }
+    }
+
+    method actualizarTorretas() {
+        torretas.forEach({ torreta =>
+            torreta.actualizarAcciones()
+        })
+    }
+}
+
 class Torreta inherits ElementoColisionable {
   var property idTorreta = gestorDeIds.nuevoId()
-  const property rangoAtaque
-  var copiaRangoAtaque = rangoAtaque
   const property velocidadDeBala
   const direccion
-  const property areaDeAtaque = [posicion]
   var img = ((("torret1") + "_stance_") + direccion.toString()) + ".png"
   var enCooldown = false
-  const tiempoCooldown = 1000 // Tiempo de cooldown en milisegundos.
+  const tiempoCooldown = 2000 
 
   method image() = img
 
   method crearTorreta(torreta){
     game.addVisual(torreta)
-    self.crearAreaDeDisparo()
+    gestorDeTorretas.agregarTorreta(self)
   }
 
-   method crearAreaDeDisparo() {
-    if (copiaRangoAtaque != 0 && direccion == 1) {
-      self.crearAreaDeDisparoUp()
-    } if (copiaRangoAtaque != 0 && direccion == 2) {
-      self.crearAreaDeDisparoRight()
-    } if (copiaRangoAtaque != 0 && direccion == 3) {
-      self.crearAreaDeDisparoDown()
-    }  if (copiaRangoAtaque != 0 && direccion == 4){
-      self.crearAreaDeDisparoLeft()
+  method actualizarAcciones() {
+    if (!enCooldown) {
+        img = "torret1" + "_frame2_" + direccion.toString() + ".png"
+        game.onTick(500, "animacionTorreta" + idTorreta, { self.animacionAtaque() })
+        self.dispararProyectil()
+        self.activarCooldown()
     }
   }
-
-
-  method crearAreaDeDisparoUp() {
-    copiaRangoAtaque -= 1
-    areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() + 1))
-    const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
-    game.addVisual(hitBox)
-    hitBox.detectarEnemigoContinuamente()
-    self.crearAreaDeDisparo()
-  }
-
-  method crearAreaDeDisparoRight() {
-    copiaRangoAtaque -= 1
-    areaDeAtaque.add(game.at(areaDeAtaque.last().x() + 1, areaDeAtaque.last().y()))
-    const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
-    game.addVisual(hitBox)
-    hitBox.detectarEnemigoContinuamente()
-    self.crearAreaDeDisparo()
-  }
-
-  method crearAreaDeDisparoDown() {
-    copiaRangoAtaque -= 1
-    areaDeAtaque.add(game.at(areaDeAtaque.last().x(), areaDeAtaque.last().y() - 1))
-    const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
-    game.addVisual(hitBox)
-    hitBox.detectarEnemigoContinuamente()
-    self.crearAreaDeDisparo()
-  }
-
-  method crearAreaDeDisparoLeft() {
-    copiaRangoAtaque -= 1
-    areaDeAtaque.add(game.at(areaDeAtaque.last().x() - 1, areaDeAtaque.last().y()))
-    const hitBox = new HitBox(posicion = areaDeAtaque.last(), cordenadasDeTorreta = posicion)
-    game.addVisual(hitBox)
-    hitBox.detectarEnemigoContinuamente()
-    self.crearAreaDeDisparo()
-  }
-
-
-  method atacar() {
-      if (!enCooldown) {
-            img = "torret1" + "_frame2_" + direccion.toString() + ".png"
-            game.onTick(500, "animacionTorreta" + idTorreta, { self.animacionAtaque() })
-            self.dispararProyectil()
-            self.activarCooldown()
-        }
-    }
 
   method animacionAtaque() {
     img = "torret1"+ "_frame1_" + direccion.toString() + ".png"
@@ -110,33 +81,17 @@ class Torreta inherits ElementoColisionable {
         posicion = self.posicion(),
         danio = 20, 
         idBala = gestorDeIds.nuevoId(),
-        velocidad = self.velocidadDeBala(),
-        movimientosPosibles = self.rangoAtaque()
-        )
+        velocidad = self.velocidadDeBala()
+      )
 
-        const shootAud = "shoot.mp3"
-    game.addVisual(bala)
-    game.sound(shootAud).play()
-    controladorDeProyectiles.agregarProyectil(bala)
-    bala.moverBala()
+      const shootAud = "shoot.mp3"
+      game.addVisual(bala)
+      game.sound(shootAud).play()
+      controladorDeProyectiles.agregarProyectil(bala)
+      bala.moverBala()
   }
 
   method esTorreta() = true
-}
-
-class HitBox inherits Elemento{
-  const property cordenadasDeTorreta
-  method image() = "hitBox.png"
-
-  method detectarEnemigoContinuamente() {
-    game.onCollideDo(self, {
-      elemento => if(elemento.esJugador()) self.ordenarAtaque()
-    })
-  }
-
-  method ordenarAtaque() {
-    game.getObjectsIn(cordenadasDeTorreta).filter({e => e.esTorreta()}).first().atacar()
-  }
 }
 
 class Proyectil inherits Elemento{
@@ -146,17 +101,16 @@ class Proyectil inherits Elemento{
   const property danio
   var property direccion
   const property velocidad 
-  var movimientosPosibles 
+  
   
 
   
 
   method moverBala() {
-    if (movimientosPosibles <= 0 || game.getObjectsIn(self.siguientePosicion(self.direccion())).any({e => e.esColisionable()})) {
+    if (game.getObjectsIn(self.siguientePosicion(self.direccion())).any({e => e.esColisionable()})) {
         self.borrarse()
     } else {
         posicion = self.siguientePosicion(self.direccion())
-        movimientosPosibles -= 1
     }
 }
 
@@ -202,7 +156,7 @@ object controladorDeProyectiles {
     method agregarProyectil(proyectil) {
         proyectiles.add(proyectil)
         if (proyectiles.size() == 1) { 
-            game.onTick(550, "moverProyectiles", { 
+            game.onTick(1, "moverProyectiles", { 
                 self.moverProyectiles()
             })
         }
@@ -215,4 +169,5 @@ object controladorDeProyectiles {
         }
     }
 }
+
 
