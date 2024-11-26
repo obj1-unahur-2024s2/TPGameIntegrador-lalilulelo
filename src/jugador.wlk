@@ -1,4 +1,3 @@
-// src/jugador.wlk
 import wollok.game.*
 import src.fondo.*
 
