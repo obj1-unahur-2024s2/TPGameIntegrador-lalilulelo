@@ -1,7 +1,3 @@
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
 import torretas.*
 import jugador.*
 import obstaculos.*
@@ -45,7 +41,7 @@ class Nivel {
   }
   
   method spawnearTorretas() {
-    listaTorretas.forEach({torreta => game.addVisual(torreta) torreta.crearAreaDeDisparo()})
+    listaTorretas.forEach({torreta => torreta.crearTorreta(torreta)})
   }
 
   method spawnearMonedas() {
@@ -106,7 +102,7 @@ object nivel0 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstacu
 }
 
 object nivel1 inherits Nivel(listaMonedas = [moneda1,moneda2,moneda3,moneda4,moneda5,moneda6], 
-listaTorretas = [torreta1], 
+listaTorretas = [torreta1,torreta2,torreta3,torreta4,torreta5,torreta6,torreta7,torreta8,torreta9,torreta10], 
 listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9,obstaculo10, obstaculo11, 
 obstaculo16, obstaculo17,obstaculo18, obstaculo19, obstaculo20, obstaculo24, obstaculo25, obstaculo26, obstaculo27, obstaculo28, obstaculo30, obstaculo31, 
 obstaculo32, obstaculo33, obstaculo333,obstaculo334, obstaculo34, obstaculo35, obstaculo36, obstaculo37,obstaculo38, obstaculo39, obstaculo40, obstaculo41, 
@@ -116,7 +112,7 @@ puerta = puertaNivel2,
 ciclope = ciclope1) {
 
   override method iniciar() {
-    super()
+    super() 
     jugador.controlesJugador()
   }
  
@@ -191,12 +187,33 @@ ciclope = ciclope1) {
   const moneda5 = new Moneda(valor = 10, posicion = game.at(14,8))
   const moneda6 = new Moneda(valor = 50, posicion = game.at(13,8))
   
-  const torreta1 = new Torreta(rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
+  const torreta1 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 1))
+  const torreta1b = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 0))
+  const torreta2 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 1))
+  const torreta3 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 2))
+  const torreta4 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 3))
+  const torreta5 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 4))
+  const torreta6 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 5))
+  const torreta7 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 7))
+  const torreta8 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 8))
+  const torreta9 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 9))
+  const torreta10 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 10))
  
   const ciclope1 = new Ciclope(velocidadMovimiento = 600, posicion = game.at(10, 10))
 }
 
 
-object nivel2 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel2, ciclope = []) {
+object nivel2 inherits Nivel(listaMonedas = [], listaTorretas = [torreta1,torreta2,torreta3,torreta4,torreta5,torreta6,torreta7,torreta8,torreta9,torreta10], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel2, ciclope = ciclope1) {
+  const torreta1 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 0))
+  const torreta2 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 1))
+  const torreta3 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 2))
+  const torreta4 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 3))
+  const torreta5 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 4))
+  const torreta6 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 5))
+  const torreta7 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 7))
+  const torreta8 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 8))
+  const torreta9 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 9))
+  const torreta10 = new Torreta( direccion = 2, velocidadDeBala = 1, posicion = game.at(3, 10))
 
+  const ciclope1 = new Ciclope(velocidadMovimiento = 600, posicion = game.at(10, 10))
 }
