@@ -1,4 +1,3 @@
-// src/niveles.wlk
 import src.torretas.*
 import src.jugador.*
 import src.obstaculos.*
@@ -102,7 +101,7 @@ class Nivel {
     if (!torretas.isEmpty()) {
       const torreta = new Torreta(posicion = game.at(torretas.first().first(), torretas.first().get(1)), direccion = torretas.first().last())
       game.addVisual(torreta)
-      torreta.actualizarAcciones()
+      gestorDeTorretas.agregarTorreta(torreta)
       torretas.remove(torretas.first())
       self.generarTorretas(torretas)
     }
