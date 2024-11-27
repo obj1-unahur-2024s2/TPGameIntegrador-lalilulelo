@@ -1,4 +1,4 @@
-# Grand Teft Cyclops
+# Grand Teft Cyclops (Las torretas estan en el DLC)
 
 ![menuInicio](https://github.com/user-attachments/assets/d85ea411-e836-4d13-af3b-2e9b15b67b1c)
 
@@ -20,7 +20,6 @@
 ## Reglas de Juego / Instrucciones
 
 - Eres un soldado sovietico que esta escapando de un bosque embrujado, pero encontraste monedas y algo en tu mente te dice que busques mas, sin saber de los peligros a los que se puede enfrentar
-
 - Flechas para moverse
 - Al llegar a 50 dolares/pesos el malo maloso se despierta
 
