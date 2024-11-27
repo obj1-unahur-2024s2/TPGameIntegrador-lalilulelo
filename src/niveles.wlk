@@ -1,202 +1,165 @@
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-// src/niveles.wlk
-import torretas.*
-import jugador.*
-import obstaculos.*
+import src.jugador.*
+import src.obstaculos.*
 import wollok.game.*
 import src.monedas.*
 import src.puerta.*
-import cyclops.*
-import fondo.*
+import src.cyclops.*
+import src.fondo.*
 
 class Nivel {
-
-  const listaMonedas  
-  const listaTorretas  
-  const listaObstaculos
-  const listaTrampas
-  const property ciclope
+  const property listaObstaculos
+  const property listaTrampas
+  const property listaMonedas
+  var property ciclope
   const property puerta
-  
+  const property ost = game.sound("level.mp3")
+  const bordes = [[0,-1], [1,-1], [2,-1], [3,-1], [4,-1], [5,-1], [6,-1], [7,-1], [8,-1], [9,-1], [10,-1], [11,-1], [12,-1], [13,-1], [14,-1], [-1,0], [-1,1], [-1,2], [-1,3], [-1,4], [-1,5], [-1,6], [-1,7], [-1,8], [-1,9], [-1,10], [-1,11], [-1,12], [0,13], [1,13], [2,13], [3,13], [4,13], [5,13], [6,13], [7,13], [8,13], [9,13], [10,13], [11,13], [12,13], [13,13], [14,13],[15,0], [15,1], [15,2], [15,3], [15,4], [15,5], [15,6], [15,7], [15,8], [15,9], [15,10], [15,11], [15,12]]
+  const fondo = new Fondo(img = "stage.png")
+  var property muted = false
+
   method iniciar() {
-    game.allVisuals().forEach({e => game.removeVisual(e)})
-    const obstaculos = [[0,-1], [1,-1], [2,-1], [3,-1], [4,-1], [5,-1], [6,-1], [7,-1], [8,-1], [9,-1], [10,-1], [11,-1], [12,-1], [13,-1], [14,-1], [-1,0], [-1,1], [-1,2], [-1,3], [-1,4], [-1,5], [-1,6], [-1,7], [-1,8], [-1,9], [-1,10], [-1,11], [-1,12], [15,0], [15,1], [15,2], [15,3], [15,4], [15,5], [15,6], [15,7], [15,8], [15,9], [15,10], [15,11], [15,12]]
-    const invisibles = [[0,13], [1,13], [2,13], [3,13], [4,13], [5,13], [6,13], [7,13], [8,13], [9,13], [10,13], [11,13], [12,13], [13,13], [14,13]]
-    const fondo = new Fondo(img = "stage.png")
-    
-    game.addVisual(fondo)
-    self.spawnearTorretas()
-    self.spawnearMonedas()
-    self.spawnearObstaculos()
-    self.rodearMapa(obstaculos, invisibles)
-    self.spawnearTrampas()
-    game.addVisual(ciclope)
-    jugador.reiniciarPuntaje()
+    self.spawnearElementos(bordes, fondo)
+    self.generarEstructuras(listaObstaculos, listaTrampas, listaMonedas)
+    jugador.nivelActual()
+    self.inicializarAudio()
+    self.inicializarJugador()
+    self.botones()
     jugador.nivelActual(self)
-    game.addVisual(barraDeVida)
-    game.addVisual(jugador)
   }
 
-  method pasarASiguienteNivel() {
-
-        game.clear()
+  method botones() {
+    self.mutear()
+    self.reiniciar()
   }
   
-  method spawnearTorretas() {
-    listaTorretas.forEach({torreta => game.addVisual(torreta) torreta.crearAreaDeDisparo()})
+  method spawnearElementos(bordesMapa, fondoMapa){
+    const bordesCopy = []
+    bordesCopy.addAll(bordes)
+    game.addVisual(fondo)
+    self.rodearMapa(bordesCopy)
   }
 
-  method spawnearMonedas() {
-    listaMonedas.forEach({moneda => game.addVisual(moneda)})
+  method spawnearCiclope() {
+    game.addVisual(self.ciclope())
   }
 
-  method spawnearObstaculos() {
-    listaObstaculos.forEach({obstaculo => game.addVisual(obstaculo)})
-  }
-
-  method spawnearTrampas() {
-    listaTrampas.forEach({trampa => game.addVisual(trampa)})
-  }
-
-  method rodearMapa(obstaculos, invisibles) {
-    if(!obstaculos.isEmpty()){
-      const obstaculo = new Obstaculo(posicion = game.at(obstaculos.first().first(), obstaculos.first().last()))
-      game.addVisual(obstaculo)
-      obstaculos.remove(obstaculos.first())
-      self.rodearMapa(obstaculos, invisibles)
-    }
+  method rodearMapa(invisibles) {
     if (!invisibles.isEmpty()) {
       const invisible = new ParedInvisible(posicion = game.at(invisibles.first().first(), invisibles.first().last()))
       game.addVisual(invisible)
       invisibles.remove(invisibles.first())
-      self.rodearMapa(obstaculos, invisibles)
+      self.rodearMapa(invisibles)
     }
   }
 
-    method reiniciar() {
-      keyboard.r().onPressDo({
-           nivel1.iniciar()
-      })
-    }
-}
+  method generarEstructuras(obstaculos, trampas, monedas) {
+    const obstCopy = []
+    const trampCopy = []
+    const monCopy = []
+    obstCopy.addAll(obstaculos)
+    trampCopy.addAll(trampas)
+    monCopy.addAll(monedas)
+    self.generarObstaculos(obstCopy)
+    self.generarTrampas(trampCopy)
+    self.generarMonedas(monCopy)
+    self.spawnearCiclope()
+  }
 
-object nivel0 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel1, ciclope = []) {
-  const fondoMenu = new Fondo(img = "menuInicio.png")
-  const menuAud = game.sound("menu.mp3")
-  override method iniciar() {
+  method generarObstaculos(obstaculos) {
+    if (!obstaculos.isEmpty()) {
+      const obstaculo = new Obstaculo(posicion = game.at(obstaculos.first().first(), obstaculos.first().last()))
+      game.addVisual(obstaculo)
+      obstaculos.remove(obstaculos.first())
+      self.generarObstaculos(obstaculos)
+    }
+  }
+
+  method generarTrampas(trampas) {
+    if (!trampas.isEmpty()) {
+      const trampa = new Trampa(posicion = game.at(trampas.first().first(), trampas.first().last()))
+      game.addVisual(trampa)
+      trampas.remove(trampas.first())
+      self.generarTrampas(trampas)
+    }
+  }
+
+  method generarMonedas(monedas) {
+    if (!monedas.isEmpty()) {
+      const moneda = new Moneda(posicion = game.at(monedas.first().first(), monedas.first().last()))
+      game.addVisual(moneda)
+      monedas.remove(monedas.first())
+      self.generarMonedas(monedas)
+    }
+  }
+
+  method inicializarAudio() {
+    self.ost().shouldLoop(true)
+    self.ost().volume(0.05)
+    self.ost().play()
+  }
+
+  method mutear() {
+    keyboard.m().onPressDo({
+      if(!muted){
+        self.ost().volume(0)
+        muted = true
+      } else {
+        self.ost().volume(0.10) 
+        muted = false
+      }
+    })
+  }
+
+  method quitarAudio() {
+    muted = true
+  }
+
+  method inicializarJugador() {
+    jugador.salud(100)
+    jugador.posicion(game.origin())
+    jugador.puntos(0)
+    game.addVisual(jugador)
+    game.addVisual(barraDeVida)
+    jugador.controlesJugador()
+    jugador.colision()
+  }
+
+  method reiniciar() {
+    keyboard.r().onPressDo({
+      self.ost().stop()
+      game.clear()
+      nivel1.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
+      nivel2.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(14, 0)))
+      self.iniciar()
+    })
+  }
+}
+object menu{
+  method abrir() {
+    const fondoMenu = new Fondo(img = "menuImage.png")
+    const menuAud = game.sound("menu.mp3")
     menuAud.play()
     menuAud.shouldLoop(true)
     menuAud.volume(0.20)
     game.addVisual(fondoMenu)
     keyboard.enter().onPressDo({
       menuAud.stop()
+      game.removeVisual(fondoMenu)
       nivel1.iniciar()
-      const levelAud = game.sound("level.mp3")
-      levelAud.shouldLoop(true)
-      levelAud.volume(0.20)
-      levelAud.play()
-      jugador.salud(100)
-      jugador.posicion(game.origin().up(1))
-      jugador.puntos(0)
     })
   }
-  
 }
 
-object nivel1 inherits Nivel(listaMonedas = [moneda1,moneda2,moneda3,moneda4,moneda5,moneda6], 
-listaTorretas = [torreta1], 
-listaObstaculos = [obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8, obstaculo9,obstaculo10, obstaculo11, 
-obstaculo16, obstaculo17,obstaculo18, obstaculo19, obstaculo20, obstaculo24, obstaculo25, obstaculo26, obstaculo27, obstaculo28, obstaculo30, obstaculo31, 
-obstaculo32, obstaculo33, obstaculo333,obstaculo334, obstaculo34, obstaculo35, obstaculo36, obstaculo37,obstaculo38, obstaculo39, obstaculo40, obstaculo41, 
-obstaculo42, obstaculo43, obstaculo44, obstaculo45, obstaculo46, obstaculo47 ],
-listaTrampas = [trampa1,trampa2,trampa3,trampa4,trampa5,trampa6,trampa7,trampa8,trampa9,trampa10,trampa11,trampa12], 
-puerta = puertaNivel2, 
-ciclope = ciclope1) {
+object nivel1 inherits Nivel(
+  listaObstaculos = [[2,0], [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8], [2,9], [2,10], [5,10], [6,10], [7,10], [8,10], [9,10], [5,11], [6,11], [7,11], [8,11], [9,11], [5,3], [6,3], [7,3], [8,3], [9,3], [5,2], [6,2], [7,2], [8,2], [9,2], [12,3], [12,4], [12,5], [12,6], [12,7], [12,8], [12,9], [12,10], [12,11], [12,12]],
+  listaTrampas = [[0,2], [0,10], [1,4], [1,5], [1,6], [1,7], [1,8], [5,1], [6,1], [8,0], [9,0], [6,12], [7,12], [3,3], [4,3], [5,12], [14,10], [14,9], [14,8], [14,7], [13,5], [13,4], [13,3], [13,0], [14,0], [14,1], [3,1], [3,0]],
+  listaMonedas = [[4,2], [3,2], [8,12], [13,12], [14,12]],
+  ciclope = new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)),
+  puerta = puertaNivel1) {}
 
-  override method iniciar() {
-    super()
-    jugador.controlesJugador()
-  }
- 
-  const levelAud = game.sound("level.mp3")
-  const obstaculo1 = new Obstaculo(posicion = game.at(2,0))  
-  const obstaculo2 = new Obstaculo(posicion = game.at(2,1))
-  const obstaculo3 = new Obstaculo(posicion = game.at(2,2))
-  const obstaculo4 = new Obstaculo(posicion = game.at(2,3))
-  const obstaculo5 = new Obstaculo(posicion = game.at(2,4))
-  const obstaculo6 = new Obstaculo(posicion = game.at(2,5))
-  const obstaculo7 = new Obstaculo(posicion = game.at(2,6))
-  const obstaculo8 = new Obstaculo(posicion = game.at(2,7))
-  const obstaculo9 = new Obstaculo(posicion = game.at(2,8))
-  const obstaculo10 = new Obstaculo(posicion = game.at(2,9))
-  const obstaculo11 = new Obstaculo(posicion = game.at(2,10))
-
-  
-  const obstaculo16 = new Obstaculo(posicion = game.at(5,10))
-  const obstaculo17 = new Obstaculo(posicion = game.at(6,10))
-  const obstaculo18 = new Obstaculo(posicion = game.at(7,10))
-  const obstaculo19 = new Obstaculo(posicion = game.at(8,10))
-  const obstaculo20 = new Obstaculo(posicion = game.at(9,10))
-  const obstaculo24 = new Obstaculo(posicion = game.at(5,11))
-  const obstaculo25 = new Obstaculo(posicion = game.at(6,11))
-  const obstaculo26 = new Obstaculo(posicion = game.at(7,11))
-  const obstaculo27 = new Obstaculo(posicion = game.at(8,11))
-  const obstaculo28 = new Obstaculo(posicion = game.at(9,11))
-
-  const obstaculo30 = new Obstaculo(posicion = game.at(5,3))
-  const obstaculo31 = new Obstaculo(posicion = game.at(6,3))
-  const obstaculo32 = new Obstaculo(posicion = game.at(7,3))
-  const obstaculo33 = new Obstaculo(posicion = game.at(8,3))
-  const obstaculo333 = new Obstaculo(posicion = game.at(9,3)) 
-  const obstaculo34 = new Obstaculo(posicion = game.at(5,2))
-  const obstaculo35 = new Obstaculo(posicion = game.at(6,2))
-  const obstaculo36 = new Obstaculo(posicion = game.at(7,2))
-  const obstaculo37 = new Obstaculo(posicion = game.at(8,2))
-  const obstaculo334 = new Obstaculo(posicion = game.at(9,2))
-
-
-  const obstaculo38 = new Obstaculo(posicion = game.at(12,3))
-  const obstaculo39 = new Obstaculo(posicion = game.at(12,4))
-  const obstaculo40 = new Obstaculo(posicion = game.at(12,5))
-  const obstaculo41 = new Obstaculo(posicion = game.at(12,6))
-  const obstaculo42 = new Obstaculo(posicion = game.at(12,7))
-  const obstaculo43 = new Obstaculo(posicion = game.at(12,8))
-  const obstaculo44 = new Obstaculo(posicion = game.at(12,9))
-  const obstaculo45 = new Obstaculo(posicion = game.at(12,10))
-  const obstaculo46 = new Obstaculo(posicion = game.at(12,11))
-  const obstaculo47 = new Obstaculo(posicion = game.at(12,12))
-  
-
-  const trampa1 = new Trampa(posicion = game.at(0,2))
-  const trampa2 = new Trampa(posicion = game.at(0,10))
-  const trampa3 = new Trampa(posicion = game.at(1,4))
-  const trampa4 = new Trampa(posicion = game.at(1,5))
-  const trampa5 = new Trampa(posicion = game.at(1,6))
-  const trampa6 = new Trampa(posicion = game.at(1,7))
-  const trampa7 = new Trampa(posicion = game.at(1,8))
-
-  const trampa8 = new Trampa(posicion = game.at(5,12))
-  const trampa9 = new Trampa(posicion = game.at(6,12))
-  const trampa10 = new Trampa(posicion = game.at(7,12))
-  const trampa11 = new Trampa(posicion = game.at(3,3))
-  const trampa12 = new Trampa(posicion = game.at(4,3))
-
-  
-  const moneda1 = new Moneda(valor = 10, posicion = game.at(7,1))
-  const moneda2 = new Moneda(valor = 10, posicion = game.at(8,0))
-  const moneda3 = new Moneda(valor = 10, posicion = game.at(8,12))
-  const moneda4 = new Moneda(valor = 10, posicion = game.at(7,1))
-  const moneda5 = new Moneda(valor = 10, posicion = game.at(14,8))
-  const moneda6 = new Moneda(valor = 50, posicion = game.at(13,8))
-  
-  const torreta1 = new Torreta(rangoAtaque = 10, direccion = 2, velocidadDeBala = 33, posicion = game.at(3, 1))
- 
-  const ciclope1 = new Ciclope(velocidadMovimiento = 600, posicion = game.at(10, 10))
-}
-
-
-object nivel2 inherits Nivel(listaMonedas = [], listaTorretas = [], listaObstaculos = [], listaTrampas = [], puerta = puertaNivel2, ciclope = []) {
-
-}
+object nivel2 inherits Nivel(
+  listaObstaculos = [[1,0], [1,1], [1,2], [1,3], [1,4], [1,5], [1,6], [2,6], [2,7], [2,8], [2,9], [2,10], [1,10], [1,11], [2,11], [5,12], [5,11], [5,10], [5,9], [5,8], [5,7], [5,6], [5,5], [5,4], [5,3], [5,2], [6,2], [7,2], [8,2], [9,2], [10,2], [7,10], [8,10], [9,10], [10,10], [11,10], [12,10], [13,10], [13,9], [13,8], [13,7], [13,6], [13,5], [13,4], [13,3], [13,2], [13,1], [13,0]],
+  listaTrampas = [[0,8], [3,11], [4,9], [3,7], [2,5], [4,5], [3,3], [3,2], [3,1], [3,0], [5,1], [7,0], [9,1], [10,1], [11,2], [12,0], [6,6], [7,3], [7,4], [7,6], [7,7], [7,8], [8,6], [9,4], [9,5], [9,8], [9,11], [10,7], [11,6], [11,4], [11,3], [11,7], [11,9], [12,7], [6,12], [7,12], [10,11], [11,11]],
+  listaMonedas = [[2,0], [1,8], [6,3], [12,9], [14,2]],
+  ciclope = new Ciclope(velocidadMovimiento = 800, posicion = game.at(14, 0)),
+  puerta = puertaNivel2) {}

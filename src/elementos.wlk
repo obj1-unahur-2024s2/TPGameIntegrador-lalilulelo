@@ -1,6 +1,5 @@
 import wollok.game.*
 
-
 class Elemento {
   var property posicion
   

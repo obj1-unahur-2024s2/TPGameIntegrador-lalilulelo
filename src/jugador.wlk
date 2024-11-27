@@ -1,5 +1,3 @@
-// src/jugador.wlk
-// src/jugador.wlk
 import wollok.game.*
 import src.fondo.*
 
@@ -15,18 +13,16 @@ object jugador {
     const diedAud = "died.mp3"
 
 
-    method initialize() {
+    method colision() {
         game.onCollideDo(self, {elemento => elemento.interactuarConJugador(self)})
     }
 
     method sumarPuntos(valor) {
         puntos = 100.min(puntos + valor)
-        if(puntos > 50 && !nivelActual.ciclope().estaDespierto()) {
+        if(puntos >= 50) {
             nivelActual.ciclope().despertar()
-        }
-        if(puntos == 100) {
             nivelActual.puerta().aparecer()
-        }
+        }   
     }
 
     method puntos() = puntos
@@ -108,16 +104,19 @@ object jugador {
     method morir() {
         game.removeVisual(self)
         game.sound(diedAud).play()
+        const muerte = new Fondo(img = "youDiedgg.png")
+        game.addVisual(muerte)
+        self.nivelActual().ost().volume(0)
+        self.nivelActual().quitarAudio()
     }
 }
 
 object barraDeVida {
-        const posicion = game.at(0, 12)
-        const img = "barraDeVida"
-        method position() = posicion
-        method image() = img + jugador.salud().toString() + ".png"
-        method esColisionable() = false
-
-        method interactuarConJugador(jugador) {
-        }
+    const posicion = game.at(0, 12)
+    const img = "barraDeVida"
+    method position() = posicion
+    method image() = img + jugador.salud().toString() + ".png"
+    method esColisionable() = false
+    method interactuarConJugador(jugador) {
     }
+}

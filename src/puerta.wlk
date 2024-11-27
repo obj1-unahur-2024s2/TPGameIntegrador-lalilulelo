@@ -1,33 +1,50 @@
 import elementos.*
 import wollok.game.*
-import jugador.*
+import src.jugador.*
 import src.niveles.*
+import src.fondo.*
 
-class Teletransportador inherits Elemento{
+class Teletransportador {
+    const posicion
     const img = "portal.png"
 
-    method image() = img
+    method position() = posicion
 
-    override method interactuarConJugador(jugador) {
-        jugador.position(game.origin().up(1))
-    }
+    method image() = img
 
     method aparecer() {
         game.addVisual(self)
     }
-}
 
-object puertaNivel1 inherits Teletransportador(posicion = game.at(0,0)){
-  override method interactuarConJugador(jugador) {
-        super(jugador)
-        nivel1.pasarASiguienteNivel()
+    method interactuarConJugador(jugador) {
+        
     }
 
+    method esColisionable() = false
 
+    method esJugador() = false
+
+    method desaparecer() {
+        game.removeVisual(self)
+    }
 }
 
-object puertaNivel2 inherits Teletransportador(posicion = game.at(5,2)){
+object puertaNivel1 inherits Teletransportador(posicion = game.at(1,0)){
   override method interactuarConJugador(jugador) {
+        nivel1.ost().stop()
+        game.clear()
+        nivel2.iniciar()
     }
+}
 
+object puertaNivel2 inherits Teletransportador(posicion = game.at(0,0)){
+    const winAud = game.sound("youWin.mp3")
+  override method interactuarConJugador(jugador) {
+        jugador.nivelActual().ost().stop()
+        game.clear()
+        const victory = new Fondo(img = "youWin.png")
+        game.addVisual(victory)
+        winAud.volume(0.10)
+        winAud.play()
+    }
 }
