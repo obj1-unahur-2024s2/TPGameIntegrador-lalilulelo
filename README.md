@@ -7,7 +7,7 @@
 
 - Esteban Christian Durante
 - Lautaro Jeremias Paz
-- Luciano Ardana
+- Luciano Ardanaz Sgalla
 
 ## Capturas
 
