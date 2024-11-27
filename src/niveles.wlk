@@ -1,3 +1,4 @@
+// src/niveles.wlk
 import src.jugador.*
 import src.obstaculos.*
 import wollok.game.*
@@ -130,13 +131,14 @@ class Nivel {
       game.clear()
       nivel1.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(10, 10)))
       nivel2.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(14, 0)))
+      nivel3.ciclope(new Ciclope(velocidadMovimiento = 1000, posicion = game.at(7, 6)))
       self.iniciar()
     })
   }
 }
 object menu{
   method abrir() {
-    const fondoMenu = new Fondo(img = "menuImage.png")
+    const fondoMenu = new Fondo(img = "menuImg.png")
     const menuAud = game.sound("menu.mp3")
     menuAud.play()
     menuAud.shouldLoop(true)
@@ -160,6 +162,13 @@ object nivel1 inherits Nivel(
 object nivel2 inherits Nivel(
   listaObstaculos = [[1,0], [1,1], [1,2], [1,3], [1,4], [1,5], [1,6], [2,6], [2,7], [2,8], [2,9], [2,10], [1,10], [1,11], [2,11], [5,12], [5,11], [5,10], [5,9], [5,8], [5,7], [5,6], [5,5], [5,4], [5,3], [5,2], [6,2], [7,2], [8,2], [9,2], [10,2], [7,10], [8,10], [9,10], [10,10], [11,10], [12,10], [13,10], [13,9], [13,8], [13,7], [13,6], [13,5], [13,4], [13,3], [13,2], [13,1], [13,0]],
   listaTrampas = [[0,8], [3,11], [4,9], [3,7], [2,5], [4,5], [3,3], [3,2], [3,1], [3,0], [5,1], [7,0], [9,1], [10,1], [11,2], [12,0], [6,6], [7,3], [7,4], [7,6], [7,7], [7,8], [8,6], [9,4], [9,5], [9,8], [9,11], [10,7], [11,6], [11,4], [11,3], [11,7], [11,9], [12,7], [6,12], [7,12], [10,11], [11,11]],
-  listaMonedas = [[2,0], [1,8], [6,3], [12,9], [14,2]],
+  listaMonedas = [[2,0], [1,8], [6,3], [12,9], [14,1]],
   ciclope = new Ciclope(velocidadMovimiento = 800, posicion = game.at(14, 0)),
   puerta = puertaNivel2) {}
+
+  object nivel3 inherits Nivel(
+  listaObstaculos = [[0,1], [1,1], [2,1], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8], [2,9], [2,10], [3,3], [4,3], [3,10], [4,10], [5,3], [5,10], [6,10], [2,12], [3,12], [4,12], [5,12], [6,10], [7,11], [6,8], [8,8], [6,4], [8,4], [5,8], [9,8], [5,4], [9,4], [5,7], [5,6], [5,5], [9,7], [9,6], [9,5], [6,3], [8,3], [6,2], [8,2], [6,1], [8,1], [8,0], [8,9], [9,10], [9,12],[10,10], [11,4], [11,10], [12,1], [12,2], [12,3], [12,4], [12,9], [12,8], [12,7], [12,10], [13,5]],
+  listaTrampas = [[0,2], [0,3], [0,4], [0,5], [0,11], [5,1], [1,7], [1,8], [1,9], [2,11], [3,1], [3,5], [3,9], [3,11], [4,7], [4,11], [5,11], [10,0], [10,1], [10,2], [10,4], [10,8], [11,6], [11,11], [12,11], [13,1], [13,10], [13,11], [14,8], [14,7], [14,3]],
+  listaMonedas = [[0,12], [3,4], [6,11], [9,0], [9,9]],
+  ciclope = new Ciclope(velocidadMovimiento = 700, posicion = game.at(7, 6)),
+  puerta = puertaNivel3) {}
