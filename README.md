@@ -16,6 +16,8 @@
 
 ![image](https://github.com/user-attachments/assets/7a04cd15-2029-46f7-ba27-e39a33defcf7)
 
+<b>VIDEO DE MUESTRA: https://streamable.com/2i2yy4 </b>
+
 
 ## Reglas de Juego / Instrucciones
 
